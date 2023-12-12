@@ -49,7 +49,7 @@ namespace OroSmart.Controllers
             return View(loginVM);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
