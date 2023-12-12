@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\css\Crm\assets\**" />
+    <Compile Remove="wwwroot\css\Crm\dist\**" />
+    <Content Remove="wwwroot\css\Crm\assets\**" />
+    <Content Remove="wwwroot\css\Crm\dist\**" />
+    <EmbeddedResource Remove="wwwroot\css\Crm\assets\**" />
+    <EmbeddedResource Remove="wwwroot\css\Crm\dist\**" />
+    <None Remove="wwwroot\css\Crm\assets\**" />
+    <None Remove="wwwroot\css\Crm\dist\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\css\Login\nprogress.css" />
     <Content Remove="wwwroot\css\Login\styleProgressBar.css" />
     <Content Remove="wwwroot\css\Login\util.css" />
@@ -32,7 +43,6 @@
     <Folder Include="wwwroot\css\Login\" />
     <Folder Include="wwwroot\css\Crm\" />
     <Folder Include="wwwroot\img\Login\" />
-    <Folder Include="wwwroot\img\Crm\" />
     <Folder Include="wwwroot\js\Crm\" />
   </ItemGroup>
 

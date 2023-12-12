@@ -10,284 +10,355 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OroSmart.styles.css" asp-append-version="true" /> -->
 
-    <!-- new crm-->
-    <link rel="canonical" href="https://www.wrappixel.com/templates/xtreme-admin-lite/" />
-    <link href="@Url.Content("~/css/Crm/images/logo.PNG")" rel="stylesheet" />
-    <link href="@Url.Content("~/css/Crm/assets/libs/chartist/dist/chartist.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/css/Crm/dist/css/style.css")" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
 
 </head>
 <body>
-    <!--
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OroSmart</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+  
+    <body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="index.html">
+                    <span class="align-middle">AdminKit</span>
+                </a>
+
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Pages
+                    </li>
+
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" href="index.html">
+                            <i class="align-middle" data-feather="sliders"></i> <span
+                                class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages-profile.html">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages-sign-in.html">
+                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages-sign-up.html">
+                            <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign
+                                Up</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages-blank.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-header">
+                        Tools & Components
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="ui-buttons.html">
+                            <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="ui-forms.html">
+                            <i class="align-middle" data-feather="check-square"></i> <span
+                                class="align-middle">Forms</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="ui-cards.html">
+                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="ui-typography.html">
+                            <i class="align-middle" data-feather="align-left"></i> <span
+                                class="align-middle">Typography</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="icons-feather.html">
+                            <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-header">
+                        Plugins & Addons
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="charts-chartjs.html">
+                            <i class="align-middle" data-feather="bar-chart-2"></i> <span
+                                class="align-middle">Charts</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="maps-google.html">
+                            <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="sidebar-cta">
+                    <div class="sidebar-cta-content">
+                        <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
+                        <div class="mb-3 text-sm">
+                            Are you looking for more components? Check out our premium version.
+                        </div>
+                        <div class="d-grid">
+                            <a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+                <!-- Navbar  -->
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
+                                <div class="position-relative">
+                                    <i class="align-middle" data-feather="bell"></i>
+                                    <span class="indicator">4</span>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+                                aria-labelledby="alertsDropdown">
+                                <div class="dropdown-menu-header">
+                                    4 New Notifications
+                                </div>
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <i class="text-danger" data-feather="alert-circle"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark">Update completed</div>
+                                                <div class="text-muted small mt-1">Restart server 12 to complete the
+                                                    update.</div>
+                                                <div class="text-muted small mt-1">30m ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <i class="text-warning" data-feather="bell"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark">Lorem ipsum</div>
+                                                <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate
+                                                    hendrerit et.</div>
+                                                <div class="text-muted small mt-1">2h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <i class="text-primary" data-feather="home"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark">Login from 192.186.1.8</div>
+                                                <div class="text-muted small mt-1">5h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <i class="text-success" data-feather="user-plus"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark">New connection</div>
+                                                <div class="text-muted small mt-1">Christina accepted your request.
+                                                </div>
+                                                <div class="text-muted small mt-1">14h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-menu-footer">
+                                    <a href="#" class="text-muted">Show all notifications</a>
+                                </div>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown"
+                                data-bs-toggle="dropdown">
+                                <div class="position-relative">
+                                    <i class="align-middle" data-feather="message-square"></i>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+                                aria-labelledby="messagesDropdown">
+                                <div class="dropdown-menu-header">
+                                    <div class="position-relative">
+                                        4 New Messages
+                                    </div>
+                                </div>
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <img src="img/avatars/avatar-5.jpg"
+                                                    class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
+                                            </div>
+                                            <div class="col-10 ps-2">
+                                                <div class="text-dark">Vanessa Tucker</div>
+                                                <div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu
+                                                    tortor.</div>
+                                                <div class="text-muted small mt-1">15m ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <img src="img/avatars/avatar-2.jpg"
+                                                    class="avatar img-fluid rounded-circle" alt="William Harris">
+                                            </div>
+                                            <div class="col-10 ps-2">
+                                                <div class="text-dark">William Harris</div>
+                                                <div class="text-muted small mt-1">Curabitur ligula sapien euismod
+                                                    vitae.</div>
+                                                <div class="text-muted small mt-1">2h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <img src="img/avatars/avatar-4.jpg"
+                                                    class="avatar img-fluid rounded-circle" alt="Christina Mason">
+                                            </div>
+                                            <div class="col-10 ps-2">
+                                                <div class="text-dark">Christina Mason</div>
+                                                <div class="text-muted small mt-1">Pellentesque auctor neque nec urna.
+                                                </div>
+                                                <div class="text-muted small mt-1">4h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row g-0 align-items-center">
+                                            <div class="col-2">
+                                                <img src="img/avatars/avatar-3.jpg"
+                                                    class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
+                                            </div>
+                                            <div class="col-10 ps-2">
+                                                <div class="text-dark">Sharon Lessman</div>
+                                                <div class="text-muted small mt-1">Aenean tellus metus, bibendum sed,
+                                                    posuere ac, mattis non.</div>
+                                                <div class="text-muted small mt-1">5h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-menu-footer">
+                                    <a href="#" class="text-muted">Show all messages</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+                                data-bs-toggle="dropdown">
+                                <i class="align-middle" data-feather="settings"></i>
+                            </a>
+
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+                                data-bs-toggle="dropdown">
+                                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"
+                                    alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
+                                        data-feather="user"></i> Profile</a>
+                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
+                                        data-feather="pie-chart"></i> Analytics</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="index.html"><i class="align-middle me-1"
+                                        data-feather="settings"></i> Settings & Privacy</a>
+                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
+                                        data-feather="help-circle"></i> Help Center</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Log out</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
-            </div>
-            }
-            <a class="btn btn-outline-success my-2 my-sm-0" asp-controller="Account" asp-action="Login">
-            <i class="bi bi-box-arrow-in-right"></i> Log in
-        </a>
-
-        <span style="padding: 5px;"></span>
-        <form asp-controller="Account" asp-action="Logout">
-            <button class="btn btn-outline-danger my-2 my-sm-0">
-                <i class="bg-info bi-box-arrow-in-right"></i> Log out
-            </button>
-        </form>
-        </nav>
-    </header> -->
-
-    <header class="topbar" data-navbarbg="skin5">
-        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-            <div class="navbar-header" data-logobg="skin5">
-
-                <a class="navbar-brand" href="index.html">
-                    <!-- Logo icon -->
-                    <b class="logo-icon">
-                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                        <!-- Dark Logo icon -->
-                        <img src="../assets/images/logo-icon.png"
-                             alt="homepage"
-                             class="dark-logo" />
-                        <!-- Light Logo icon -->
-                        <img src="../assets/images/logo.PNG"
-                             alt="homepage"
-                             class="light-logo"
-                             style="width:60px; height: 60px;" />
-                    </b>
-                    <!--End Logo icon -->
-                    <!-- Logo text -->
-                    <span class="logo-text">
-                        <!-- dark Logo text -->
-                        <img src="../assets/images/logo-text.png"
-                             alt="homepage"
-                             class="dark-logo" />
-                        <!-- Light Logo text -->
-                        <!-- <img
-                          src="../assets/images/logo-light-text.png"
-                          class="light-logo"
-                          alt="homepage"
-                        /> -->
-                    </span>
-                </a>
-
-                <a class="nav-toggler waves-effect waves-light d-block d-md-none"
-                   href="javascript:void(0)">
-                    <i class="ti-menu ti-close"></i>
-                </a>
-            </div>
-
-            <div class="navbar-collapse collapse"
-                 id="navbarSupportedContent"
-                 data-navbarbg="skin5">
-
-                <ul class="navbar-nav float-start me-auto">
-
-                    <li class="nav-item search-box">
-                        <a class="nav-link waves-effect waves-dark"
-                           href="javascript:void(0)">
-                            <i class="mdi mdi-magnify fs-4"></i>
-                        </a>
-                        <form class="app-search position-absolute">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Search &amp; enter" />
-                            <a class="srh-btn"><i class="mdi mdi-close"></i></a>
-                        </form>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav float-end">
-
-                    <li class="nav-item dropdown">
-                        <a class="
-                    nav-link
-                    dropdown-toggle
-                    text-muted
-                    waves-effect waves-dark
-                    pro-pic
-                  "
-                           href="#"
-                           id="navbarDropdown"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            <img src="../assets/images/users/1.jpg"
-                                 alt="user"
-                                 class="rounded-circle"
-                                 width="31" />
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end user-dd animated"
-                            aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account m-r-5 m-l-5"></i> My Profile</a>
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-wallet m-r-5 m-l-5"></i> My Balance</a>
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email m-r-5 m-l-5"></i> Inbox</a>
-                        </ul>
-                    </li>
-
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <aside class="left-sidebar" data-sidebarbg="skin6">
-        <!-- Sidebar scroll-->
-        <div class="scroll-sidebar">
-            <!-- Sidebar navigation-->
-            <nav class="sidebar-nav">
-                <ul id="sidebarnav">
-                    <!-- User Profile-->
-                    <li>
-                        <!-- User Profile-->
-                        <div class="user-profile d-flex no-block dropdown m-t-20">
-                            <div class="user-pic">
-                                <img src="../assets/images/users/1.jpg"
-                                     alt="users"
-                                     class="rounded-circle"
-                                     width="40" />
-                            </div>
-                            <div class="user-content hide-menu m-l-10">
-                                <a href="#"
-                                   class=""
-                                   id="Userdd"
-                                   role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-haspopup="true"
-                                   aria-expanded="false">
-                                    <h5 class="m-b-0 user-name font-medium">
-                                        Steave Jobs <i class="mdi mdi-chevron-down fs-4"></i>
-                                    </h5>
-                                    <span class="op-5 user-email">varun@gmail.com</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end"
-                                     aria-labelledby="Userdd">
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="mdi mdi-account m-r-5 m-l-5"></i> My
-                                        Profile
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="mdi mdi-wallet m-r-5 m-l-5"></i> My
-                                        Balance
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email m-r-5 m-l-5"></i> Inbox</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)">
-                                        <i class="mdi mdi-settings m-r-5 m-l-5"></i> Account
-                                        Setting
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-power m-r-5 m-l-5"></i> Logout</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End User Profile-->
-                    </li>
-                    <li class="p-15 m-t-10">
-                        <a href="create.html" class="btn d-block w-100 create-btn text-white no-block d-flex align-items-center">
-                            <i class="mdi mdi-plus-box"></i>
-                            <span class="hide-menu m-l-5">Create New</span>
-                        </a>
-                    </li>
-                    <!-- User Profile-->
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                           href="index.html"
-                           aria-expanded="false">
-                            <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                           href="pages-profile.html"
-                           aria-expanded="false">
-                            <i class="mdi mdi-account-network"></i><span class="hide-menu">Profile</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                           href="table-basic.html"
-                           aria-expanded="false">
-                            <i class="mdi mdi-border-all"></i><span class="hide-menu">Table</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                           href="icon-material.html"
-                           aria-expanded="false">
-                            <i class="mdi mdi-face"></i><span class="hide-menu">Icon</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                           href="starter-kit.html"
-                           aria-expanded="false">
-                            <i class="mdi mdi-file"></i><span class="hide-menu">Blank</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                           href="error-404.html"
-                           aria-expanded="false">
-                            <i class="mdi mdi-alert-outline"></i><span class="hide-menu">404</span>
-                        </a>
-                    </li>
-                    <li class="text-center p-40 upgrade-btn">
-                        <a href="https://www.wrappixel.com/templates/xtremeadmin/"
-                           class="btn d-block w-100 btn-danger text-white"
-                           target="_blank">Upgrade to Pro</a>
-                    </li>
-                </ul>
             </nav>
-            <!-- End Sidebar navigation -->
-        </div>
-        <!-- End Sidebar scroll-->
-    </aside>
-    <!--
-    <div class="container">
-        <main role="main" class="pb-3"> -->
-            @RenderBody()
-    <!--
-        </main>
-    </div> -->
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - OroSmart - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+                        @RenderBody()
+
+            <!-- Footer  -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href="https://adminkit.io/"
+                                    target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted"
+                                    href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin
+                                        Template</strong></a> &copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
+    </div>
+        
+
+           
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
 
-    <script src="@Url.Content("~/js/Crm/dist/js/app-style-switcher.js")"></script>
-    <!--Wave Effects -->
-    <script src="@Url.Content("~/js/Crm/dist/js/waves.js")"></script>
-    <!--Menu sidebar -->
-    <script src="@Url.Content("~/js/Crm/dist/js/sidebarmenu.js")"></script>
-    <!--Custom JavaScript -->
-    <script src="@Url.Content("~/js/Crm/dist/js/custom.js")"></script>
-    <!--This page JavaScript -->
-    <!--chartis chart-->
-    <script src="@Url.Content("~/js/Crm/assets/libs/chartist/dist/chartist.min.js")"></script>
-    <script src="@Url.Content("~/js/Crm/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js")"></script>
-    <script src="@Url.Content("~/js/Crm/dist/js/pages/dashboards/dashboard1.js ")"></script>
+   <script src="~/js/app.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
