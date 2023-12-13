@@ -67,7 +67,6 @@ namespace OroSmart.Controllers
             var UserLogins = _context.Users
                 .Select(u => new UserLoginVM
                 {
-                    UserId = u.Id,
                     UserName = u.FullName, 
                     IPAddress = u.LastLoginIpAddress,
                     LastLoginTime = u.LastLoginTime
