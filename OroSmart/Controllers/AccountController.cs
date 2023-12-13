@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OroSmart.Data;
+using OroSmart.Data.Static;
 using OroSmart.Data.ViewModels;
 using OroSmart.Models;
 
@@ -34,6 +36,14 @@ namespace OroSmart.Controllers
                 if (passwordCheck)
                 {
 
+                    user.LastLoginTime = DateTime.Now;
+                    user.LastLoginIpAddress = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+                    if (string.IsNullOrEmpty(user.LastLoginIpAddress))
+                    {
+                        user.LastLoginIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+                    }
+                    await _userManager.UpdateAsync(user);
+
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
@@ -49,11 +59,32 @@ namespace OroSmart.Controllers
             return View(loginVM);
         }
 
+        //To save user log in 
+        [Authorize(Roles = UserRoles.Admin)]
+        public IActionResult UserLogins()
+        {
+
+            var UserLogins = _context.Users
+                .Select(u => new UserLoginVM
+                {
+                    UserId = u.Id,
+                    UserName = u.FullName, 
+                    IPAddress = u.LastLoginIpAddress,
+                    LastLoginTime = u.LastLoginTime
+
+                })
+                .ToList();
+
+            return View(UserLogins);
+        }
+
         [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            
+            return RedirectToAction("Login", "Account");
         }
     }
 }

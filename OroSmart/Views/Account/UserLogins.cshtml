@@ -1,0 +1,30 @@
+﻿@using OroSmart.Data.ViewModels;
+@model List<UserLoginVM>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <h2>User Logins</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>IP Address</th>
+                <th>Lated Login</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userLogin in Model)
+            {
+                <tr>
+                    <td>@userLogin.UserId</td>
+                    <td>@userLogin.UserName</td>
+                    <td>@userLogin.IPAddress</td>
+                    <td>@userLogin.LastLoginTime</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

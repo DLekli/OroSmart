@@ -203,17 +203,24 @@
                                 <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"
                                     alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
                             </a>
-
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <form asp-controller="Account" asp-action="UserLogins" asp-route-returnUrl="/" method="post">
+                                    <button type="submit" class="btn btn-link">User Logins</button>
+                            </form>
+                            }
                            <div class="dropdown">
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="#"> Profile </a>
     <a class="dropdown-item" href="#"> Analytics </a>
     <a class="dropdown-item" href="#"> Settings & Privacy </a>
     <a class="dropdown-item" href="#"> Help Center </a>
-     <a class="dropdown-item" href="#"> Log out </a>
+     @* <a class="dropdown-item" href="#" > Log out </a> *@
+     <a class="dropdown-item" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" data-method="post"> Log out</a>
+                                    
   </div>
 </div>
-
+                            
 
 
                         </li>

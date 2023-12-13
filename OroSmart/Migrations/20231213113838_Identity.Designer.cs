@@ -12,7 +12,7 @@ using OroSmart.Data;
 namespace OroSmart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231211090630_Identity")]
+    [Migration("20231213113838_Identity")]
     partial class Identity
     {
         /// <inheritdoc />
