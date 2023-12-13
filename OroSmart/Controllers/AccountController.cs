@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OroSmart.Data;
+using OroSmart.Data.Pagination;
 using OroSmart.Data.Static;
 using OroSmart.Data.ViewModels;
 using OroSmart.Models;
@@ -59,23 +60,43 @@ namespace OroSmart.Controllers
             return View(loginVM);
         }
 
-        //To save user log in 
-        [Authorize(Roles = UserRoles.Admin)]
-        public IActionResult UserLogins()
-        {
+        //To save user log in without pagination
+        //[Authorize(Roles = UserRoles.Admin)]
+        //public IActionResult UserLogins()
+        //{
 
-            var UserLogins = _context.Users
+        //    var UserLogins = _context.Users
+        //        .Select(u => new UserLoginVM
+        //        {
+        //            UserName = u.FullName, 
+        //            IPAddress = u.LastLoginIpAddress,
+        //            LastLoginTime = u.LastLoginTime
+
+        //        })
+        //        .ToList();
+
+        //    return View(UserLogins);
+        //}
+
+
+        //To save user log in with pagination
+        [Authorize(Roles = UserRoles.Admin)]
+        public IActionResult UserLogins(int pageNumber = 1, int pageSize = 1)
+        {
+            var userLogins = _context.Users
                 .Select(u => new UserLoginVM
                 {
-                    UserName = u.FullName, 
+                    UserName = u.FullName,
                     IPAddress = u.LastLoginIpAddress,
                     LastLoginTime = u.LastLoginTime
-
                 })
                 .ToList();
 
-            return View(UserLogins);
+            var paginatedUserLogins = PaginatedList<UserLoginVM>.Create(userLogins, pageNumber, pageSize);
+
+            return View(paginatedUserLogins);
         }
+
 
         [HttpGet]
         [HttpPost]
