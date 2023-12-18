@@ -3,14 +3,27 @@
 @* @model List<UserLoginVM>  *@
 @using OroSmart.Data.Pagination;
 @model PaginatedList<UserLoginVM>
+
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
+
     <h2>User Logins</h2>
 
     <table class="table">
+        <form id="searchForm" class="form-check-inline my-2 my-0 my-lg-0" asp-controller="Account" asp-action="Filter" style="padding-right: 25px;">
+            <div class="input-group">
+
+                <input id="userNameSearch" name="userNameSearch" type="text" class="form-control" placeholder="Search by User Name">
+                <input id="ipAddressSearch" name="ipAddressSearch" type="text" class="form-control" placeholder="Search by IP Address">
+                <input name="lastLoginTimeSearch" type="datetime-local" class="form-control" placeholder="Search by Last Login Time">
+                @* <input id="lastLoginTimeSearch" name="lastLoginTimeSearch" type="text" class="form-control" placeholder="Search by Last Login Time (MM/dd/yyyy h:mm:ss tt)"> *@
+
+                <button id="searchButton" class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
         <thead>
+
             <tr>
-               
                 <th>User Name</th>
                 <th>IP Address</th>
                 <th>Lasted Login</th>
@@ -21,7 +34,6 @@
             @foreach (var userLogin in Model)
             {
                 <tr>
-                    
                     <td>@userLogin.UserName</td>
                     <td>@userLogin.IPAddress</td>
                     <td>@userLogin.LastLoginTime</td>
@@ -30,6 +42,7 @@
             }
         </tbody>
     </table>
+
 }
 
 @{
@@ -67,3 +80,9 @@
 
     <a asp-action="UserLogins" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">Next</a>
 </div>
+
+
+
+
+
+

@@ -6,6 +6,7 @@ using OroSmart.Data.Pagination;
 using OroSmart.Data.Static;
 using OroSmart.Data.ViewModels;
 using OroSmart.Models;
+using System.Globalization;
 
 namespace OroSmart.Controllers
 {
@@ -60,28 +61,10 @@ namespace OroSmart.Controllers
             return View(loginVM);
         }
 
-        //To save user log in without pagination
-        //[Authorize(Roles = UserRoles.Admin)]
-        //public IActionResult UserLogins()
-        //{
-
-        //    var UserLogins = _context.Users
-        //        .Select(u => new UserLoginVM
-        //        {
-        //            UserName = u.FullName, 
-        //            IPAddress = u.LastLoginIpAddress,
-        //            LastLoginTime = u.LastLoginTime
-
-        //        })
-        //        .ToList();
-
-        //    return View(UserLogins);
-        //}
-
-
+        
         //To save user log in with pagination
         [Authorize(Roles = UserRoles.Admin)]
-        public IActionResult UserLogins(int pageNumber = 1, int pageSize = 1)
+        public IActionResult UserLogins(int pageNumber = 1, int pageSize = 10)
         {
             var userLogins = _context.Users
                 .Select(u => new UserLoginVM
@@ -97,6 +80,50 @@ namespace OroSmart.Controllers
             return View(paginatedUserLogins);
         }
 
+    
+        [Authorize(Roles = UserRoles.Admin)]
+        public IActionResult Filter(string userNameSearch, string ipAddressSearch, DateTime? lastLoginTimeSearch, int pageNumber = 1, int pageSize = 10)
+        {
+            IQueryable<UserLoginVM> filteredUserLogins = _context.Users
+                .Select(u => new UserLoginVM
+                {
+                    UserName = u.FullName,
+                    IPAddress = u.LastLoginIpAddress,
+                    LastLoginTime = u.LastLoginTime
+                });
+
+            // Apply filters based on search parameters
+            if (!string.IsNullOrEmpty(userNameSearch))
+            {
+                filteredUserLogins = filteredUserLogins.Where(u => u.UserName.Contains(userNameSearch));
+            }
+
+            if (!string.IsNullOrEmpty(ipAddressSearch))
+            {
+                filteredUserLogins = filteredUserLogins.Where(u => u.IPAddress.Contains(ipAddressSearch));
+            }
+
+            if (lastLoginTimeSearch.HasValue)
+            {
+                DateTime startDate = lastLoginTimeSearch.Value.Date;
+                DateTime endDate = startDate.AddDays(1);
+
+                filteredUserLogins = filteredUserLogins
+                   .Where(u => u.LastLoginTime >= lastLoginTimeSearch && u.LastLoginTime < lastLoginTimeSearch.Value.AddMinutes(1));
+
+                //Ony for the date not for the hour 
+                //filteredUserLogins = filteredUserLogins
+                //    .Where(u => u.LastLoginTime >= startDate && u.LastLoginTime < endDate);
+                //filteredUserLogins = filteredUserLogins.Where(u => u.LastLoginTime == lastLoginTimeSearch.Value);
+            }
+
+            // Create a paginated list for the filtered results
+            var paginatedUserLogins = PaginatedList<UserLoginVM>.Create(filteredUserLogins.ToList(), pageNumber, pageSize);
+
+            return View("UserLogins", paginatedUserLogins);
+        }
+
+        
 
         [HttpGet]
         [HttpPost]
