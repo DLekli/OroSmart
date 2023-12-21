@@ -56,16 +56,10 @@ namespace OroSmart.Controllers
             return View(loginVM);
         }
 
-        /*[Authorize(Roles = "Admin")] // Add this attribute to restrict access to administrators
-        public IActionResult UserLoginHistory()
-        {
-            var userLoginHistory = _context.UserLoginHistories.ToList();
-            return View(userLoginHistory);
-        }*/
-
+       
 
         [Authorize(Roles = "Admin")]
-        public IActionResult UserLoginHistory(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch)
+        public IActionResult UserLoginHistory(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch, int pageNumber = 1, int pageSize = 10)
         {
             var query = _context.UserLoginHistories.AsQueryable();
 
@@ -82,23 +76,25 @@ namespace OroSmart.Controllers
 
             if (loginTimeSearch.HasValue)
             {
-                query = query.Where(u => u.LoginTime >= loginTimeSearch);
+                query = query.Where(u => u.LoginTime >= loginTimeSearch.Value);
             }
 
             if (logoutTimeSearch.HasValue)
             {
-                query = query.Where(u => u.LogoutTime.HasValue && u.LogoutTime.Value <= logoutTimeSearch);
+                query = query.Where(u => u.LogoutTime.HasValue && u.LogoutTime.Value <= logoutTimeSearch.Value);
             }
 
-            var userLoginHistory = query.ToList();
+            // Implement pagination
+            var paginatedList = PaginatedList<UserLoginHistory>.Create(query, pageNumber, pageSize);
 
             ViewBag.UserNameSearch = userNameSearch;
             ViewBag.IPAddressSearch = ipAddressSearch;
             ViewBag.LoginTimeSearch = loginTimeSearch?.ToString("yyyy-MM-ddTHH:mm");
             ViewBag.LogoutTimeSearch = logoutTimeSearch?.ToString("yyyy-MM-ddTHH:mm");
 
-            return View(userLoginHistory);
+            return View(paginatedList);
         }
+
 
         private async Task SaveUserLoginHistory(ApplicationUser user)
         {
@@ -116,21 +112,6 @@ namespace OroSmart.Controllers
         }
 
 
-        // Helper method to save user logout history
-        /*private async Task SaveUserLogoutHistory(ApplicationUser user)
-        {
-            var logoutHistory = new UserLoginHistory
-            {
-                UserId = user.Id,
-                FullName = user.FullName,
-                LogoutTime = DateTime.Now,
-                // Capture the logout IP address here if needed
-            };
-
-            // Save the UserLoginHistory record to the database
-            _context.UserLoginHistories.Add(logoutHistory);
-            await _context.SaveChangesAsync();
-        }*/
 
         // Helper method to save user logout history
         private async Task SaveUserLogoutHistory(ApplicationUser user)
@@ -149,22 +130,17 @@ namespace OroSmart.Controllers
             }
             else
             {
-                // If no matching login record is found, you may handle it accordingly (e.g., log an error)
+                
             }
         }
 
-
-
-        
 
         [HttpGet]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            // Retrieve the current user
             var user = await _userManager.GetUserAsync(User);
 
-            // Save user logout history
             await SaveUserLogoutHistory(user);
 
             await _signInManager.SignOutAsync();
