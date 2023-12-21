@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#title {
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+#styleTable {
+    background-color: white;
+    margin: 30px;
+}
+
+#searchButton {
+    background-color: #222e3c;
+    color: white;
+}

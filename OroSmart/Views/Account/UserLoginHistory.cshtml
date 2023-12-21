@@ -4,19 +4,11 @@
 
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
-    <h2>User Login History</h2>
 
-    <table class="table">
-        <form id="searchForm" asp-controller="Account" asp-action="UserLoginHistory" method="get">
-            <div class="input-group">
-                <input id="userNameSearch" name="userNameSearch" type="text" class="form-control" placeholder="Search by User Name" value="@ViewBag.UserNameSearch">
-                <input id="loginTimeSearch" name="loginTimeSearch" type="datetime-local" class="form-control" placeholder="Search by Login Time" value="@ViewBag.LoginTimeSearch">
-                <input id="ipAddressSearch" name="ipAddressSearch" type="text" class="form-control" placeholder="Search by IP Address" value="@ViewBag.IPAddressSearch">
-                <input id="logoutTimeSearch" name="logoutTimeSearch" type="datetime-local" class="form-control" placeholder="Search by Logout Time" value="@ViewBag.LogoutTimeSearch">
+    <link href="@Url.Content("~/css/site.css")" rel="stylesheet" />
+    <h2 id="title">User Login History</h2>
 
-                <button id="searchButton" class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
-            </div>
-        </form>
+    <table class="table" id="styleTable">
         <thead>
             <tr>
                 <th>Full Name</th>
@@ -26,6 +18,24 @@
             </tr>
         </thead>
         <tbody>
+             <form id="searchForm" action="/Account/UserLoginHistory" method="get">
+                        <div class="input-group">
+                    <tr>
+                        <td><input id="userNameSearch" name="userNameSearch" type="text" class="form-control"
+                                placeholder="Search by User Name" value=""></td>
+                        <td> <input id="loginTimeSearch" name="loginTimeSearch" type="datetime-local"
+                                class="form-control" placeholder="Search by Login Time" value=""></td>
+                        <td> <input id="ipAddressSearch" name="ipAddressSearch" type="text" class="form-control"
+                                placeholder="Search by IP Address" value=""></td>
+                        <td> <input id="logoutTimeSearch" name="logoutTimeSearch" type="datetime-local"
+                                class="form-control" placeholder="Search by Logout Time" value="">
+                        </td>
+                        <td>  <button id="searchButton" class="btn" type="submit"><i
+                            class="bi bi-search" id="searchButton"></i> Search </button> </td>
+                    </tr>
+            </div>
+            </form>
+
             @foreach (var loginHistory in Model)
             {
                 <tr>

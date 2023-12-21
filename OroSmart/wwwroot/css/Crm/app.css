@@ -659,7 +659,6 @@ progress {
     padding-left: calc(var(--bs-gutter-x) * 0.5);
     padding-right: calc(var(--bs-gutter-x) * 0.5);
     width: 100%;
-    display: flex;
     flex: 1;
 }
 
@@ -16120,3 +16119,10 @@ span.flatpickr-weekday {
     width: 260px;
 }
 
+.dropdownStyle {
+   margin-right: 150px!important;
+}
+
+.admin {
+    padding: 0;
+}
