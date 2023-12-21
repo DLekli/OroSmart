@@ -7,7 +7,10 @@ namespace OroSmart.Models
     {
         [Display(Name = "Full name")]
         public string FullName { get; set; }
-        public DateTime LastLoginTime { get; set; }
-        public string LastLoginIpAddress { get; set; }
+        //public DateTime LastLoginTime { get; set; }
+        //public string LastLoginIpAddress { get; set; }
+        public virtual ICollection<UserLoginHistory> LoginHistory { get; set; }
+
+
     }
 }

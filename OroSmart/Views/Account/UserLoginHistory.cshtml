@@ -1,0 +1,41 @@
+﻿ @model List<UserLoginHistory> 
+@* @using OroSmart.Data.Pagination; *@
+@* @model PaginatedList<UserLoginHistory> *@
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <h2>User Login History</h2>
+
+    <table class="table">
+        <form id="searchForm" asp-controller="Account" asp-action="UserLoginHistory" method="get">
+            <div class="input-group">
+                <input id="userNameSearch" name="userNameSearch" type="text" class="form-control" placeholder="Search by User Name" value="@ViewBag.UserNameSearch">
+                <input id="loginTimeSearch" name="loginTimeSearch" type="datetime-local" class="form-control" placeholder="Search by Login Time" value="@ViewBag.LoginTimeSearch">
+                <input id="ipAddressSearch" name="ipAddressSearch" type="text" class="form-control" placeholder="Search by IP Address" value="@ViewBag.IPAddressSearch">
+                <input id="logoutTimeSearch" name="logoutTimeSearch" type="datetime-local" class="form-control" placeholder="Search by Logout Time" value="@ViewBag.LogoutTimeSearch">
+
+                <button id="searchButton" class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Login Time</th>
+                <th>Login IP Address</th>
+                <th>Logout Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loginHistory in Model)
+            {
+                <tr>
+                    <td>@loginHistory.FullName</td>
+                    <td>@(loginHistory.LoginTime.HasValue ? loginHistory.LoginTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
+                    <td>@(loginHistory.LoginIpAddress ?? "-")</td>
+                    <td>@(loginHistory.LogoutTime.HasValue ? loginHistory.LogoutTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

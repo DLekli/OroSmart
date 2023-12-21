@@ -43,12 +43,12 @@
         </tbody>
     </table>
 
-}
+} 
 
 @{
     string prevDisabled = Model.PageIndex == 1 ? "disabled" : "";
     string nextDisabled = Model.PageIndex == Model.TotalPages ? "disabled" : "";
-}
+} 
 
 <div class="pagination justify-content-center">
     <a asp-action="UserLogins" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled">Previous</a>
@@ -79,7 +79,7 @@
     </div>
 
     <a asp-action="UserLogins" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">Next</a>
-</div>
+</div> 
 
 
 

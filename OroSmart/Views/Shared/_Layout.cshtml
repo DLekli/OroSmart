@@ -191,9 +191,21 @@
                                     <a href="#" class="text-muted">Show all messages</a>
                                 </div>
                             </div>
-                            @if (User.IsInRole("Admin"))
+                           @*  @if (User.IsInRole("Admin"))
                             {
                                 <form asp-controller="Account" asp-action="UserLogins" asp-route-returnUrl="/" method="post">
+                                    <button type="submit" class="btn btn-link">User Logins</button>
+                                </form>
+                            }  *@
+                            @* @if (User.IsInRole("Admin"))
+                            {
+                                <form asp-controller="Account" asp-action="FilterWithPjax" asp-route-returnUrl="/" method="post">
+                                    <button type="submit" class="btn btn-link">User Logins</button>
+                                </form>
+                            } *@
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <form asp-controller="Account" asp-action="UserLoginHistory" asp-route-returnUrl="/" method="post">
                                     <button type="submit" class="btn btn-link">User Logins</button>
                                 </form>
                             }

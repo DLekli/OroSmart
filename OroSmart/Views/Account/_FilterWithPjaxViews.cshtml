@@ -1,0 +1,24 @@
+﻿@using OroSmart.Data.ViewModels;
+<thead>
+    <tr>
+        <th>User Name</th>
+        <th>IP Address</th>
+        <th>Lasted Login</th>
+    </tr>
+</thead>
+
+<tbody id="logInTables">
+    @foreach (var userLogin in Model)
+    {
+        <tr>
+            <td>@userLogin.UserName</td>
+            <td>@userLogin.IPAddress</td>
+            <td>@userLogin.LastLoginTime</td>
+        </tr>
+    }
+</tbody>
+
+
+
+
+
