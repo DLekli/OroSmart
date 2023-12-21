@@ -46,4 +46,10 @@
     <Folder Include="wwwroot\js\Crm\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Views\Settings\ChangePassword.cshtml" />
+    <None Include="Views\Settings\DisplayLanguages.cshtml" />
+    <None Include="Views\Settings\userInfo.cshtml" />
+  </ItemGroup>
+
 </Project>

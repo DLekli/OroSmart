@@ -8,6 +8,7 @@ namespace OroSmart.Models
         [Display(Name = "Full name")]
         public string FullName { get; set; }
         public DateTime LastLoginTime { get; set; }
-        public string LastLoginIpAddress { get; set; }
+        public string? LastLoginIpAddress { get; set; }
+        public string Language {  get; set; } = "en-US";
     }
 }

@@ -1,0 +1,43 @@
+﻿@using static OroSmart.Models.ApplicationUser
+@inject LanguageService language
+
+@{
+    ViewData["Title"] = @language.Getkey("settings");
+    var userEmail = ViewBag.UserEmail as string;
+}
+
+<div class="container" style="margin-top:30px;">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">Settings Menu</div>
+                <div class="list-group list-group-flush">
+                    <a asp-controller="Settings" asp-action="userInfo" class="list-group-item list-group-item-action"> <i class="bi bi-person"></i> User Info</a>
+                    <a asp-controller="Settings" asp-action="ChangePassword" class="list-group-item list-group-item-action"> <i class="bi bi-lock"></i> Change Password</a>
+                    <a asp-controller="Settings" asp-action="DisplayLanguages" class="list-group-item list-group-item-action"> <i class="bi bi-globe-europe-africa"></i> @language.Getkey("language")</a>
+                    <!-- Add more options as needed -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">User Info</div>
+
+                <div class="card-body" id="settingsContent">
+                    <!-- Initial content or empty area for selected settings -->
+                    <form id="userInfoForm">
+                        <div>
+                            <p><strong>Full Name:</strong> @Model.FullName</p>
+                            <p><strong>Username:</strong> @Model.UserName</p>
+                            <p><strong>Email:</strong> @Model.Email</p>
+                            <p><strong>Language:</strong> @Model.Language</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
