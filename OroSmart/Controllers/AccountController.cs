@@ -56,14 +56,12 @@ namespace OroSmart.Controllers
             return View(loginVM);
         }
 
-       
 
         [Authorize(Roles = "Admin")]
         public IActionResult UserLoginHistory(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch, int pageNumber = 1, int pageSize = 10)
         {
             var query = _context.UserLoginHistories.AsQueryable();
 
-            // Apply filters based on search parameters
             if (!string.IsNullOrEmpty(userNameSearch))
             {
                 query = query.Where(u => u.FullName.Contains(userNameSearch));
@@ -76,24 +74,38 @@ namespace OroSmart.Controllers
 
             if (loginTimeSearch.HasValue)
             {
-                query = query.Where(u => u.LoginTime >= loginTimeSearch.Value);
+                var searchDateTime = loginTimeSearch.Value;
+
+                query = query.Where(u => u.LoginTime.HasValue &&
+                                          u.LoginTime.Value.Year == searchDateTime.Year &&
+                                          u.LoginTime.Value.Month == searchDateTime.Month &&
+                                          u.LoginTime.Value.Day == searchDateTime.Day &&
+                                          u.LoginTime.Value.Hour == searchDateTime.Hour &&
+                                          u.LoginTime.Value.Minute == searchDateTime.Minute);
             }
 
             if (logoutTimeSearch.HasValue)
             {
-                query = query.Where(u => u.LogoutTime.HasValue && u.LogoutTime.Value <= logoutTimeSearch.Value);
+                var searchDateTime = logoutTimeSearch.Value;
+
+                query = query.Where(u => u.LogoutTime.HasValue &&
+                                          u.LogoutTime.Value.Year == searchDateTime.Year &&
+                                          u.LogoutTime.Value.Month == searchDateTime.Month &&
+                                          u.LogoutTime.Value.Day == searchDateTime.Day &&
+                                          u.LogoutTime.Value.Hour == searchDateTime.Hour &&
+                                          u.LogoutTime.Value.Minute == searchDateTime.Minute);
             }
 
-            // Implement pagination
             var paginatedList = PaginatedList<UserLoginHistory>.Create(query, pageNumber, pageSize);
 
             ViewBag.UserNameSearch = userNameSearch;
             ViewBag.IPAddressSearch = ipAddressSearch;
-            ViewBag.LoginTimeSearch = loginTimeSearch?.ToString("yyyy-MM-ddTHH:mm");
-            ViewBag.LogoutTimeSearch = logoutTimeSearch?.ToString("yyyy-MM-ddTHH:mm");
+            ViewBag.LoginTimeSearch = loginTimeSearch?.ToString("yyyy-MM-ddTHH:mm:ss");
+            ViewBag.LogoutTimeSearch = logoutTimeSearch?.ToString("yyyy-MM-ddTHH:mm:ss");
 
             return View(paginatedList);
         }
+
 
 
         private async Task SaveUserLoginHistory(ApplicationUser user)
@@ -106,33 +118,26 @@ namespace OroSmart.Controllers
                 LoginIpAddress = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress?.ToString()
             };
 
-            // Save the UserLoginHistory record to the database
             _context.UserLoginHistories.Add(loginHistory);
             await _context.SaveChangesAsync();
         }
 
-
-
-        // Helper method to save user logout history
+       
         private async Task SaveUserLogoutHistory(ApplicationUser user)
         {
-            // Retrieve the latest login history for the user
             var latestLoginHistory = _context.UserLoginHistories
-                .Where(h => h.UserId == user.Id && h.LogoutTime == null) // Get the latest login record without a logout time
+                .Where(h => h.UserId == user.Id && h.LogoutTime == null) 
                 .OrderByDescending(h => h.LoginTime)
                 .FirstOrDefault();
 
             if (latestLoginHistory != null)
             {
-                // Update the existing login history record with logout information
                 latestLoginHistory.LogoutTime = DateTime.Now;
                 await _context.SaveChangesAsync();
             }
-            else
-            {
-                
-            }
         }
+
+
 
 
         [HttpGet]
@@ -140,7 +145,6 @@ namespace OroSmart.Controllers
         public async Task<IActionResult> Logout()
         {
             var user = await _userManager.GetUserAsync(User);
-
             await SaveUserLogoutHistory(user);
 
             await _signInManager.SignOutAsync();

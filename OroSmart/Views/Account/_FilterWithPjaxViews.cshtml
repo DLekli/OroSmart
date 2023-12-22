@@ -1,24 +1,58 @@
-﻿@using OroSmart.Data.ViewModels;
-<thead>
-    <tr>
-        <th>User Name</th>
-        <th>IP Address</th>
-        <th>Lasted Login</th>
-    </tr>
-</thead>
+﻿@using OroSmart.Data.Pagination;
 
-<tbody id="logInTables">
-    @foreach (var userLogin in Model)
-    {
+@model PaginatedList<UserLoginHistory>
+<table class="table" id="styleTable">
+    <thead>
         <tr>
-            <td>@userLogin.UserName</td>
-            <td>@userLogin.IPAddress</td>
-            <td>@userLogin.LastLoginTime</td>
+            <th>Full Name</th>
+            <th>Login Time</th>
+            <th>Login IP Address</th>
+            <th>Logout Time</th>
         </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var loginHistory in Model)
+        {
+            <tr>
+                <td>@loginHistory.FullName</td>
+                <td>@(loginHistory.LoginTime.HasValue ? loginHistory.LoginTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
+                <td>@(loginHistory.LoginIpAddress ?? "-")</td>
+                <td>@(loginHistory.LogoutTime.HasValue ? loginHistory.LogoutTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@{
+    string prevDisabled = Model.PageIndex == 1 ? "disabled" : "";
+    string nextDisabled = Model.PageIndex == Model.TotalPages ? "disabled" : "";
+}
+
+<div class="pagination justify-content-center">
+    @if (Model.HasPrevieousPage)
+    {
+        <a asp-action="FilterWithPjax" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled">Previous</a>
     }
-</tbody>
 
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <div class="pagination-list">
+            <form asp-action="FilterWithPjax" asp-route-pageNumber=@i method="get" class="d-inline">
+                <input id="userNameSearch" type="hidden" value="@ViewBag.userNameSearch" name="userNameSearch" />
+                <input id="ipAddressSearch" type="hidden" value="@ViewBag.ipAddressSearch" name="ipAddressSearch" />
+                <input id="lastLoginTimeSearch" type="hidden" value="@ViewBag.lastLoginTimeSearch" name="lastLoginTimeSearch" />
+                <input id="pageNumber" type="hidden" value="@i" name="pageNumber" />
+                <button type="submit" class="btn @(i == Model.PageIndex ? "btn-primary" : "btn-secondary")">@i</button>
+            </form>
 
-
-
-
+            @* <span>...</span> *@
+        </div>
+    }
+    @if (Model.HasNextieousPage)
+    {
+        <a asp-action="FilterWithPjax" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">Next</a>
+    }
+</div>

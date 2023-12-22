@@ -1,5 +1,5 @@
 ﻿@*  @model List<UserLoginHistory>  *@
-@using OroSmart.Data.Pagination; 
+@using OroSmart.Data.Pagination;
 @model PaginatedList<UserLoginHistory>
 
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -18,23 +18,34 @@
             </tr>
         </thead>
         <tbody>
-             <form id="searchForm" action="/Account/UserLoginHistory" method="get">
-                        <div class="input-group">
-                    <tr>
-                        <td><input id="userNameSearch" name="userNameSearch" type="text" class="form-control"
-                                placeholder="Search by User Name" value=""></td>
-                        <td> <input id="loginTimeSearch" name="loginTimeSearch" type="datetime-local"
-                                class="form-control" placeholder="Search by Login Time" value=""></td>
-                        <td> <input id="ipAddressSearch" name="ipAddressSearch" type="text" class="form-control"
-                                placeholder="Search by IP Address" value=""></td>
-                        <td> <input id="logoutTimeSearch" name="logoutTimeSearch" type="datetime-local"
-                                class="form-control" placeholder="Search by Logout Time" value="">
-                        </td>
-                        <td>  <button id="searchButton" class="btn" type="submit"><i
-                            class="bi bi-search" id="searchButton"></i> Search </button> </td>
-                    </tr>
+            <form id="searchForm" action="/Account/UserLoginHistory" method="get">
+                <div class="input-group">
+            <tr>
+                <td>
+                    <input  id="userNameSearch" name="userNameSearch" type="text" class="form-control"
+        placeholder="Search by User Name" value="@ViewBag.userNameSearch">
+                </td>
+                <td>
+                    <input id="loginTimeSearch" name="loginTimeSearch" type="datetime-local"
+                           class="form-control" placeholder="Search by Login Time" value="@ViewBag.LoginTimeSearch" >
+                </td>
+                <td>
+                    <input id="ipAddressSearch" name="ipAddressSearch" type="text" class="form-control"
+                           placeholder="Search by IP Address" value="@ViewBag.IPAddressSearch">
+                </td>
+                <td>
+                    <input id="logoutTimeSearch" name="logoutTimeSearch" type="datetime-local"
+                           class="form-control" placeholder="Search by Logout Time" value="@ViewBag.LogoutTimeSearch">
+                </td>
+                <td>
+                    <button id="searchButton" class="btn" type="submit">
+                        <i class="bi bi-search" id="searchButton"></i> Search
+                    </button>
+                </td>
+            </tr>
             </div>
             </form>
+
 
             @foreach (var loginHistory in Model)
             {
@@ -83,4 +94,5 @@
     </div>
 
     <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">Next</a>
-</div> 
+</div>
+

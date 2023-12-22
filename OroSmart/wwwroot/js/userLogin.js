@@ -5,7 +5,7 @@
         const pageNumber = pages
     var params = `?userNameSearch=${userName}&ipAddressSearch=${ipAddress}&lastLoginTimeSearch=${lastLoginTime}&pageNumber=${pages}`
     var settings = {
-        "url": `/Account/FilterWithPjaxOther${params}`,
+        "url": `/Account/UserLoginHistoryOther${params}`,
         "method": "GET",
         "headers": {
             "Content-Type": "application/json"
