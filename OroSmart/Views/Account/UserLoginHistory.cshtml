@@ -49,8 +49,8 @@
             var urlParams = new URLSearchParams(window.location.search);
             urlParams.set("userNameSearch", "@ViewBag.userNameSearch");
             urlParams.set("ipAddressSearch", "@ViewBag.IPAddressSearch");
-            urlParams.set("lastLoginTimeSearch", "@ViewBag.LoginTimeSearch");
-            urlParams.set("LogoutTimeSearch", "@ViewBag.LogoutTimeSearch");
+            urlParams.set("loginTimeSearch", "@ViewBag.LoginTimeSearch");
+            urlParams.set("logoutTimeSearch", "@ViewBag.LogoutTimeSearch");
             urlParams.set("pageNumber", "@ViewBag.pageNumber");
             history.replaceState(null, null, "?" + urlParams.toString());
         }

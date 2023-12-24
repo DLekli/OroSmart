@@ -5,7 +5,8 @@
         //const pageNumber = pages
         urlParams.set("userNameSearch", userName);
         urlParams.set("ipAddressSearch", ipAddress);
-        urlParams.set("lastLoginTimeSearch", lastLoginTime);
+        urlParams.set("loginTimeSearch", lastLoginTime);
+        urlParams.set("logoutTimeSearch", lastlogoutTimeSearc);
         urlParams.set("pageNumber", 1);
         history.replaceState(null, null, "?" + urlParams.toString());
         var params = `?userNameSearch=${userName}&ipAddressSearch=${ipAddress}&loginTimeSearch=${lastLoginTime}&logoutTimeSearch=${lastlogoutTimeSearc}`
