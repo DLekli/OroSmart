@@ -102,8 +102,57 @@ namespace OroSmart.Controllers
             ViewBag.IPAddressSearch = ipAddressSearch;
             ViewBag.LoginTimeSearch = loginTimeSearch?.ToString("yyyy-MM-ddTHH:mm:ss");
             ViewBag.LogoutTimeSearch = logoutTimeSearch?.ToString("yyyy-MM-ddTHH:mm:ss");
+            ViewBag.pageNumber = pageNumber;
 
             return View(paginatedList);
+        }
+        public IActionResult UserLoginHistoryOther(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch, int pageNumber = 1, int pageSize = 10)
+        {
+            var query = _context.UserLoginHistories.AsQueryable();
+
+            if (!string.IsNullOrEmpty(userNameSearch))
+            {
+                query = query.Where(u => u.FullName.Contains(userNameSearch));
+            }
+
+            if (!string.IsNullOrEmpty(ipAddressSearch))
+            {
+                query = query.Where(u => u.LoginIpAddress.Contains(ipAddressSearch));
+            }
+
+            if (loginTimeSearch.HasValue)
+            {
+                var searchDateTime = loginTimeSearch.Value;
+
+                query = query.Where(u => u.LoginTime.HasValue &&
+                                          u.LoginTime.Value.Year == searchDateTime.Year &&
+                                          u.LoginTime.Value.Month == searchDateTime.Month &&
+                                          u.LoginTime.Value.Day == searchDateTime.Day &&
+                                          u.LoginTime.Value.Hour == searchDateTime.Hour &&
+                                          u.LoginTime.Value.Minute == searchDateTime.Minute);
+            }
+
+            if (logoutTimeSearch.HasValue)
+            {
+                var searchDateTime = logoutTimeSearch.Value;
+
+                query = query.Where(u => u.LogoutTime.HasValue &&
+                                          u.LogoutTime.Value.Year == searchDateTime.Year &&
+                                          u.LogoutTime.Value.Month == searchDateTime.Month &&
+                                          u.LogoutTime.Value.Day == searchDateTime.Day &&
+                                          u.LogoutTime.Value.Hour == searchDateTime.Hour &&
+                                          u.LogoutTime.Value.Minute == searchDateTime.Minute);
+            }
+
+            var paginatedList = PaginatedList<UserLoginHistory>.Create(query, pageNumber, pageSize);
+
+            ViewBag.UserNameSearch = userNameSearch;
+            ViewBag.IPAddressSearch = ipAddressSearch;
+            ViewBag.LoginTimeSearch = loginTimeSearch?.ToString("yyyy-MM-ddTHH:mm:ss");
+            ViewBag.LogoutTimeSearch = logoutTimeSearch?.ToString("yyyy-MM-ddTHH:mm:ss");
+            ViewBag.pageNumber = pageNumber;
+
+            return PartialView("_FilterWithPjaxViews", paginatedList);
         }
 
 

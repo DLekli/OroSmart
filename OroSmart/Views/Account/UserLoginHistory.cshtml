@@ -4,95 +4,55 @@
 
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
-
-    <link href="@Url.Content("~/css/site.css")" rel="stylesheet" />
-    <h2 id="title">User Login History</h2>
-
-    <table class="table" id="styleTable">
-        <thead>
-            <tr>
-                <th>Full Name</th>
-                <th>Login Time</th>
-                <th>Login IP Address</th>
-                <th>Logout Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <form id="searchForm" action="/Account/UserLoginHistory" method="get">
-                <div class="input-group">
+    <form id="searchForm"  >
+        <div class="input-group">
             <tr>
                 <td>
-                    <input  id="userNameSearch" name="userNameSearch" type="text" class="form-control"
-        placeholder="Search by User Name" value="@ViewBag.userNameSearch">
+                    <input id="userNameSearch_query"  type="text" class="form-control"
+                           placeholder="Search by User Name" value="@ViewBag.userNameSearch">
                 </td>
                 <td>
-                    <input id="loginTimeSearch" name="loginTimeSearch" type="datetime-local"
-                           class="form-control" placeholder="Search by Login Time" value="@ViewBag.LoginTimeSearch" >
+                    <input id="loginTimeSearch_query"  type="datetime-local"
+                           class="form-control" placeholder="Search by Login Time" value="@ViewBag.LoginTimeSearch">
                 </td>
                 <td>
-                    <input id="ipAddressSearch" name="ipAddressSearch" type="text" class="form-control"
+                    <input id="ipAddressSearch_query"  type="text" class="form-control"
                            placeholder="Search by IP Address" value="@ViewBag.IPAddressSearch">
                 </td>
                 <td>
-                    <input id="logoutTimeSearch" name="logoutTimeSearch" type="datetime-local"
+                    <input id="logoutTimeSearch_query"  type="datetime-local"
                            class="form-control" placeholder="Search by Logout Time" value="@ViewBag.LogoutTimeSearch">
                 </td>
                 <td>
-                    <button id="searchButton" class="btn" type="submit">
+                    <button id="searchButton_query" class="btn" type="submit">
                         <i class="bi bi-search" id="searchButton"></i> Search
                     </button>
                 </td>
             </tr>
-            </div>
-            </form>
+        </div>
+    </form>
 
 
-            @foreach (var loginHistory in Model)
-            {
-                <tr>
-                    <td>@loginHistory.FullName</td>
-                    <td>@(loginHistory.LoginTime.HasValue ? loginHistory.LoginTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
-                    <td>@(loginHistory.LoginIpAddress ?? "-")</td>
-                    <td>@(loginHistory.LogoutTime.HasValue ? loginHistory.LogoutTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+    <div id="searchContainer">
 
-@{
-    string prevDisabled = Model.PageIndex == 1 ? "disabled" : "";
-    string nextDisabled = Model.PageIndex == Model.TotalPages ? "disabled" : "";
-}
-
-<div class="pagination justify-content-center">
-    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled">Previous</a>
-
-    <div class="pagination-list">
-        @if (Model.PageIndex > 3)
-        {
-            <form asp-action="UserLoginHistory" asp-route-pageNumber="1" method="post" class="d-inline">
-                <button type="submit" class="btn btn-secondary">1</button>
-            </form>
-            <span>...</span>
-        }
-
-        @for (int i = Math.Max(1, Model.PageIndex - 2); i <= Math.Min(Model.TotalPages, Model.PageIndex + 2); i++)
-        {
-            <form asp-action="UserLoginHistory" asp-route-pageNumber="@i" method="post" class="d-inline">
-                <button type="submit" class="btn @(i == Model.PageIndex ? "btn-primary" : "btn-secondary")">@i</button>
-            </form>
-        }
-
-        @if (Model.PageIndex < Model.TotalPages - 2)
-        {
-            <span>...</span>
-            <form asp-action="UserLoginHistory" asp-route-pageNumber="@Model.TotalPages" method="post" class="d-inline">
-                <button type="submit" class="btn btn-secondary">@Model.TotalPages</button>
-            </form>
-        }
+    @await Html.PartialAsync("_FilterWithPjaxViews")
     </div>
+        
 
-    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">Next</a>
-</div>
 
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/userLogin.js"></script>
+    <script>
+        {
+            var urlParams = new URLSearchParams(window.location.search);
+            urlParams.set("userNameSearch", "@ViewBag.userNameSearch");
+            urlParams.set("ipAddressSearch", "@ViewBag.IPAddressSearch");
+            urlParams.set("lastLoginTimeSearch", "@ViewBag.LoginTimeSearch");
+            urlParams.set("LogoutTimeSearch", "@ViewBag.LogoutTimeSearch");
+            urlParams.set("pageNumber", "@ViewBag.pageNumber");
+            history.replaceState(null, null, "?" + urlParams.toString());
+        }
+    </script>
+}

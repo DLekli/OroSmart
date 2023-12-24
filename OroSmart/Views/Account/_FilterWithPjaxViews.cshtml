@@ -11,8 +11,6 @@
         </tr>
     </thead>
     <tbody>
-
-
         @foreach (var loginHistory in Model)
         {
             <tr>
@@ -24,7 +22,7 @@
         }
     </tbody>
 </table>
-}
+
 
 @{
     string prevDisabled = Model.PageIndex == 1 ? "disabled" : "";
@@ -32,27 +30,37 @@
 }
 
 <div class="pagination justify-content-center">
-    @if (Model.HasPrevieousPage)
-    {
-        <a asp-action="FilterWithPjax" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled">Previous</a>
-    }
+    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled">Previous</a>
 
-    @for (int i = 1; i <= Model.TotalPages; i++)
-    {
-        <div class="pagination-list">
-            <form asp-action="FilterWithPjax" asp-route-pageNumber=@i method="get" class="d-inline">
+    <div class="pagination-list">
+        @if (Model.PageIndex > 3)
+        {
+            <form asp-action="UserLoginHistory" asp-route-pageNumber="1" method="post" class="d-inline">
+                <button type="submit" class="btn btn-secondary">1</button>
+            </form>
+            <span>...</span>
+        }
+
+        @for (int i = Math.Max(1, Model.PageIndex - 2); i <= Math.Min(Model.TotalPages, Model.PageIndex + 2); i++)
+        {
+            <form asp-action="UserLoginHistory" asp-route-pageNumber="@i" method="post" class="d-inline">
                 <input id="userNameSearch" type="hidden" value="@ViewBag.userNameSearch" name="userNameSearch" />
                 <input id="ipAddressSearch" type="hidden" value="@ViewBag.ipAddressSearch" name="ipAddressSearch" />
-                <input id="lastLoginTimeSearch" type="hidden" value="@ViewBag.lastLoginTimeSearch" name="lastLoginTimeSearch" />
+                <input id="loginTimeSearch" type="hidden" value="@ViewBag.LoginTimeSearch" name="loginTimeSearch" />
+                <input id="logoutTimeSearch" type="hidden" value="@ViewBag.LogoutTimeSearch" name="logoutTimeSearch" />
                 <input id="pageNumber" type="hidden" value="@i" name="pageNumber" />
                 <button type="submit" class="btn @(i == Model.PageIndex ? "btn-primary" : "btn-secondary")">@i</button>
             </form>
+        }
 
-            @* <span>...</span> *@
-        </div>
-    }
-    @if (Model.HasNextieousPage)
-    {
-        <a asp-action="FilterWithPjax" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">Next</a>
-    }
+        @if (Model.PageIndex < Model.TotalPages - 2)
+        {
+            <span>...</span>
+            <form asp-action="UserLoginHistory" asp-route-pageNumber="@Model.TotalPages" method="post" class="d-inline">
+                <button type="submit" class="btn btn-secondary">@Model.TotalPages</button>
+            </form>
+        }
+    </div>
+
+    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">Next</a>
 </div>
