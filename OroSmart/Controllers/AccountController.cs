@@ -41,11 +41,9 @@ namespace OroSmart.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
-                        // Save user login history
                         await SaveUserLoginHistory(user);
 
                         return RedirectToAction("Index", "Home");
-                        //return View("Index", "Home", "_LayoutNew");
                     }
                 }
                 TempData["Error"] = "Wrong credentials. Please, try again";
@@ -106,6 +104,8 @@ namespace OroSmart.Controllers
 
             return View(paginatedList);
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult UserLoginHistoryOther(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch, int pageNumber = 1, int pageSize = 10)
         {
             var query = _context.UserLoginHistories.AsQueryable();
@@ -156,7 +156,6 @@ namespace OroSmart.Controllers
         }
 
 
-
         private async Task SaveUserLoginHistory(ApplicationUser user)
         {
             var loginHistory = new UserLoginHistory
@@ -171,11 +170,11 @@ namespace OroSmart.Controllers
             await _context.SaveChangesAsync();
         }
 
-       
+
         private async Task SaveUserLogoutHistory(ApplicationUser user)
         {
             var latestLoginHistory = _context.UserLoginHistories
-                .Where(h => h.UserId == user.Id && h.LogoutTime == null) 
+                .Where(h => h.UserId == user.Id && h.LogoutTime == null)
                 .OrderByDescending(h => h.LoginTime)
                 .FirstOrDefault();
 
@@ -185,8 +184,6 @@ namespace OroSmart.Controllers
                 await _context.SaveChangesAsync();
             }
         }
-
-
 
 
         [HttpGet]
