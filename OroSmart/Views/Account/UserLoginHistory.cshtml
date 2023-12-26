@@ -66,33 +66,53 @@
 }
 
 <div class="pagination justify-content-center">
-    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled">Previous</a>
+    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-userNameSearch="@ViewBag.userNameSearch"
+       asp-route-ipAddressSearch="@ViewBag.IPAddressSearch"
+       asp-route-loginTimeSearch="@ViewBag.LoginTimeSearch"
+       asp-route-logoutTimeSearch="@ViewBag.LogoutTimeSearch"
+       class="btn btn-default @prevDisabled">Previous</a>
 
     <div class="pagination-list">
         @if (Model.PageIndex > 3)
         {
-            <form asp-action="UserLoginHistory" asp-route-pageNumber="1" method="post" class="d-inline">
-                <button type="submit" class="btn btn-secondary">1</button>
-            </form>
+            <a asp-action="UserLoginHistory" asp-route-pageNumber="1"
+               asp-route-userNameSearch="@ViewBag.userNameSearch"
+               asp-route-ipAddressSearch="@ViewBag.IPAddressSearch"
+               asp-route-loginTimeSearch="@ViewBag.LoginTimeSearch"
+               asp-route-logoutTimeSearch="@ViewBag.LogoutTimeSearch"
+               class="btn btn-secondary">1</a>
             <span>...</span>
         }
 
         @for (int i = Math.Max(1, Model.PageIndex - 2); i <= Math.Min(Model.TotalPages, Model.PageIndex + 2); i++)
         {
-            <form asp-action="UserLoginHistory" asp-route-pageNumber="@i" method="post" class="d-inline">
-                <button type="submit" class="btn @(i == Model.PageIndex ? "btn-primary" : "btn-secondary")">@i</button>
-            </form>
+            <a asp-action="UserLoginHistory" asp-route-pageNumber="@i"
+               asp-route-userNameSearch="@ViewBag.userNameSearch"
+               asp-route-ipAddressSearch="@ViewBag.IPAddressSearch"
+               asp-route-loginTimeSearch="@ViewBag.LoginTimeSearch"
+               asp-route-logoutTimeSearch="@ViewBag.LogoutTimeSearch"
+               class="btn @(i == Model.PageIndex ? "btn-primary" : "btn-secondary")">@i</a>
         }
 
         @if (Model.PageIndex < Model.TotalPages - 2)
         {
             <span>...</span>
-            <form asp-action="UserLoginHistory" asp-route-pageNumber="@Model.TotalPages" method="post" class="d-inline">
-                <button type="submit" class="btn btn-secondary">@Model.TotalPages</button>
-            </form>
+            <a asp-action="UserLoginHistory" asp-route-pageNumber="@Model.TotalPages"
+               asp-route-userNameSearch="@ViewBag.userNameSearch"
+               asp-route-ipAddressSearch="@ViewBag.IPAddressSearch"
+               asp-route-loginTimeSearch="@ViewBag.LoginTimeSearch"
+               asp-route-logoutTimeSearch="@ViewBag.LogoutTimeSearch"
+               class="btn btn-secondary">@Model.TotalPages</a>
         }
     </div>
 
-    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">Next</a>
+    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-userNameSearch="@ViewBag.userNameSearch"
+       asp-route-ipAddressSearch="@ViewBag.IPAddressSearch"
+       asp-route-loginTimeSearch="@ViewBag.LoginTimeSearch"
+       asp-route-logoutTimeSearch="@ViewBag.LogoutTimeSearch"
+       class="btn btn-default @nextDisabled">Next</a>
 </div>
+
 

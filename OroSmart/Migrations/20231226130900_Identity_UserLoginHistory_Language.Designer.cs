@@ -12,8 +12,8 @@ using OroSmart.Data;
 namespace OroSmart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231221101335_Identity")]
-    partial class Identity
+    [Migration("20231226130900_Identity_UserLoginHistory_Language")]
+    partial class Identity_UserLoginHistory_Language
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -178,6 +178,10 @@ namespace OroSmart.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Language")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -5,8 +5,9 @@
     ViewData["Title"] = @language.Getkey("settings");
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
+@if (User.Identity.IsAuthenticated){
 
-<div class="container" style="margin-top:30px;">
+   <div class="container" style="margin-top:30px;">
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-5 mb-3">
@@ -49,7 +50,7 @@
                                 }
                             }
                         </a>
-                        </br>
+                        
                         <form asp-controller="Settings" asp-action="ChangeLanguage" method="post">
                             <button type="submit" name="culture" value="en-US">English</button>
                             <button type="submit" name="culture" value="it-IT">Italian</button>
@@ -63,3 +64,9 @@
         </div>
     </div>
 </div>
+}
+
+
+
+
+

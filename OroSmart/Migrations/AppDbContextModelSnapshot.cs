@@ -178,19 +178,10 @@ namespace OroSmart.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-=======
                     b.Property<string>("Language")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastLoginIpAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastLoginTime")
-                        .HasColumnType("datetime2");
-
->>>>>>> Semi
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
