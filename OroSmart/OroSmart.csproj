@@ -43,7 +43,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\css\Crm\NewFolder\" />
     <Folder Include="wwwroot\css\Login\" />
-    <Folder Include="wwwroot\img\Login\" />
     <Folder Include="wwwroot\js\Crm\" />
   </ItemGroup>
 
