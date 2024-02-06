@@ -1,0 +1,140 @@
+﻿@model List<Customer>
+
+<div class="container">
+    <h2 style="margin-left:10px; font-size:2.53125rem;">Customers</h2>
+
+    <a class="btn btn-success btn-lg" asp-controller="Customer" asp-action="Create" style="max-width: 250px;margin-left: 10px;border-radius: 10px;">
+        <i class="bi bi-person-plus"></i> Add a Customer
+    </a>
+
+    <p></p>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">ID</th>
+                        <th>Name</th>
+                        <th>VAT</th>
+                        <th>Date of Registration</th>
+                        <th>Active</th>
+                        <th>First Entry User</th>
+                        <th>Last Update User</th>
+                        <th>Last Update Timestamp</th>
+                        <th style="width: 115px;">Actions</th>
+                    </tr>
+                    <tr>
+
+                        <form method="get" class="form-horizontal">
+                        <td>
+                            <input type="text" class="form-control" name="id" placeholder="ID" value="@ViewBag.Id" />
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" name="name" placeholder="Name" value="@ViewBag.Name" />
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" name="vat" placeholder="VAT" value="@ViewBag.VAT" />
+                        </td>
+
+                        <td>
+                            <input typedate" class="form-control" name="dateOfRegistration" placeholder="Date of Registration" value="@ViewBag.DateOfRegistration" />
+                        </td>
+
+                        <td>
+                            <input class="form-check-input" type="checkbox" name="active" style="margin-left: 13px;margin-top: -3px;" @(ViewBag.Active == true ? "checked" : "") />
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" name="firstEntryUser" placeholder="First Entry User" value="@ViewBag.FirstEntryUser" />
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" name="lastUpdateUser" placeholder="Last Update User" value="@ViewBag.LastUpdateUser" />
+                        </td>
+
+                        <td>
+                            <input type="date" class="form-control" name="lastUpdateTimestamp" placeholder="Last Update Timestamp" value="@ViewBag.LastUpdateTimestamp" />
+                        </td>
+
+                        <td>
+                            <div style="display: inline-block;">
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass" style="width: 50px;"></i></button>
+                            </div>
+                        </td>
+                        </form>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model)
+                    {
+                        <tr>
+                            <td>@customer.Id</td>
+                            <td>@customer.Name</td>
+                            <td>@customer.VAT</td>
+                            <td>@customer.DateOfRegistration</td>
+                            <td>@customer.Active</td>
+                            <td>@customer.CustomersAdded.UserName</td>
+                            <td>@customer.CustomersLastUpdated.UserName</td>
+                            <td>@customer.last_update_Timestamp</td>
+                            <td>
+                                <a asp-action="View" asp-route-id="@customer.Id"><i class="fa-solid fa-eye" style="font-size: 25px;"></i></a>
+                                <a asp-action="Edit" asp-route-id="@customer.Id"><i class="fa-solid fa-pen-to-square" style="font-size: 25px;"></i></a>
+                                <a asp-action="Delete" asp-route-id="@customer.Id"><i class="fa-solid fa-trash" style="font-size: 25px;"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-------------------- Pagination Logic ----------------------->
+    <div class="pagination justify-content-center">
+        <ul class="pagination">
+            @if (ViewBag.TotalPages > 1)
+            {
+                <li class="page-item @(ViewBag.Page == 1 ? "disabled" : "")">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                        <span class="sr-only">First</span>
+                    </a>
+                </li>
+
+                <li class="page-item @(ViewBag.Page == 1 ? "disabled" : "")">
+                    <a class="page-link" href="?page=@(ViewBag.Page - 1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.Page == i ? "active" : "")">
+                        <a class="page-link" href="?page=@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(ViewBag.Page == ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link" href="?page=@(ViewBag.Page + 1)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+
+                <li class="page-item @(ViewBag.Page == ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link" href="?page=@ViewBag.TotalPages" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                        <span class="sr-only">Last</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+
+<script src="https://kit.fontawesome.com/bdb4dc8795.js" crossorigin="anonymous"></script>

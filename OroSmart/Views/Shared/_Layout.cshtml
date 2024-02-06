@@ -1,7 +1,7 @@
 ﻿
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,58 +13,63 @@
 
 
 
-    
 
-    </head>
+
+</head>
     @inject LanguageService language;
 
-    <body>
+<body>
 
-        <div class="wrapper">
-            <!-- Sidebar  -->
-            <nav id="sidebar" class="sidebar js-sidebar">
-                <div class="sidebar-content js-simplebar">
-                    <a class="sidebar-brand" href="index.html">
-                        <span class="align-middle">AdminKit </span> 
-                    </a>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="index">
+                    <span class="align-middle">AdminKit </span>
+                </a>
 
-                    <ul class="sidebar-nav">
-                        <li class="sidebar-header">
-                            Pages
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Pages
+                    </li>
+
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-controller="Account" asp-action="UserLoginHistory">
+                                <i class="bi bi-people"></i> <span class="align-middle">@language.Getkey("userlogin")</span>
+                            </a>
                         </li>
+                    }
 
-                        
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="sidebar-item active">
-                                <a class="sidebar-link" asp-controller="Account" asp-action="UserLoginHistory">
-                                    <i class="bi bi-people"></i> <span class="align-middle">@language.Getkey("userlogin")</span>
-                                </a>
-                            </li>
-                        }
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" asp-controller="Customer" asp-action="Index">
+                            <i class="bi bi-people"></i> <span class="align-middle">@language.Getkey("customers")</span>
+                        </a>
+                    </li>
 
-
-                    </ul>
+                </ul>
 
 
-                </div>
-            </nav>
+            </div>
+        </nav>
 
-            <div class="main">
-                <nav class="navbar navbar-expand navbar-light navbar-bg">
-                    <a class="sidebar-toggle js-sidebar-toggle">
-                        <i class="hamburger align-self-center"></i>
-                    </a>
-                    <!-- Navbar  -->
-                    <div class="navbar-collapse collapse">
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+                <!-- Navbar  -->
+                <div class="navbar-collapse collapse">
 
-                        <ul class="navbar-nav navbar-align">        
+                    <ul class="navbar-nav navbar-align">
 
-                            <ul class="navbar-nav navbar-align">
-                                
+                        <ul class="navbar-nav navbar-align">
 
-                                <li class="nav-item dropdown">
-                                   
+
+                            <li class="nav-item dropdown">
+
 
 
                                 <div class="profile">
@@ -77,58 +82,52 @@
                                 </div>
                                 <div class="menu">
                                     <ul>
-                                        <li><a asp-controller="Settings" asp-action="userInfo"><i class="bi bi-gear"></i>&nbsp;Settings</a></li>
+                                        <li><a asp-controller="Account" asp-action="Settings"><i class="bi bi-gear"></i>&nbsp;Settings</a></li>
                                         <li><a asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" data-method="post"><i class="bi bi-box-arrow-right"></i>&nbsp;Sign Out</a></li>
                                     </ul>
                                 </div>
 
 
-           
-
-    </li>
-    </ul>
-    </div>
-    </nav>
 
 
-    @RenderBody()
-
-    <!-- Footer  -->
-    <footer class="footer" style="margin-top: auto;">
-        <div class="container-fluid">
-            <div class="row text-muted">
-                <div class="col-6 text-start">
-                    <p class="mb-0">
-                        <a class="text-muted" href="https://adminkit.io/"
-                        target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted"
-                        href="https://adminkit.io/" target="_blank">
-                            <strong>
-                                Bootstrap Admin
-                                Template
-                            </strong>
-                        </a> &copy;
-                    </p>
+                            </li>
+                        </ul>
                 </div>
-                <div class="col-6 text-end">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-                        </li>
-                    </ul>
+            </nav>
+
+
+            @RenderBody()
+
+            <!-- Footer  -->
+            <footer class="footer" style="margin-top: auto;">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href="#"
+                                   target="_blank"><strong>OroSmart</strong></a>
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </footer>
         </div>
-    </footer>
-    </div>
     </div>
 
 
@@ -140,11 +139,11 @@
     <script src="@Url.Content("~/js/Crm/app.js")"></script>
     <script src="@Url.Content("~/js/UserDropdown/user.js")"></script>
 
-  
-       
-   
+
+
+
 
     @await RenderSectionAsync("Scripts", required: false)
-    </body>
+</body>
 
-    </html>
+</html>

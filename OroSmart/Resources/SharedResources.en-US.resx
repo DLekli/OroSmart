@@ -123,6 +123,9 @@
   <data name="cpassword" xml:space="preserve">
     <value>Confim Password</value>
   </data>
+  <data name="customers" xml:space="preserve">
+    <value>Customers</value>
+  </data>
   <data name="dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>

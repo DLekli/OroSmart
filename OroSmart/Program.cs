@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OroSmart.Data;
-//using OroSmart.Data.Services;
 using OroSmart.Data.Validator;
 using OroSmart.Models;
 using System.Globalization;
@@ -92,10 +91,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseAuthorization();
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

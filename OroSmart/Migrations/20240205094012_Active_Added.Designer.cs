@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OroSmart.Data;
 
@@ -11,9 +12,11 @@ using OroSmart.Data;
 namespace OroSmart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240205094012_Active_Added")]
+    partial class Active_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,6 +166,9 @@ namespace OroSmart.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -226,48 +232,6 @@ namespace OroSmart.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("OroSmart.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("DateOfRegistration")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VAT")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("first_entry_user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("last_update_Timestamp")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("last_update_user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("first_entry_user_id");
-
-                    b.HasIndex("last_update_user_id");
-
-                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("OroSmart.Models.UserLoginHistory", b =>
@@ -353,25 +317,6 @@ namespace OroSmart.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OroSmart.Models.Customer", b =>
-                {
-                    b.HasOne("OroSmart.Models.ApplicationUser", "CustomersAdded")
-                        .WithMany("CustomersAdded")
-                        .HasForeignKey("first_entry_user_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OroSmart.Models.ApplicationUser", "CustomersLastUpdated")
-                        .WithMany("CustomersLastUpdated")
-                        .HasForeignKey("last_update_user_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CustomersAdded");
-
-                    b.Navigation("CustomersLastUpdated");
-                });
-
             modelBuilder.Entity("OroSmart.Models.UserLoginHistory", b =>
                 {
                     b.HasOne("OroSmart.Models.ApplicationUser", "User")
@@ -385,10 +330,6 @@ namespace OroSmart.Migrations
 
             modelBuilder.Entity("OroSmart.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("CustomersAdded");
-
-                    b.Navigation("CustomersLastUpdated");
-
                     b.Navigation("LoginHistory");
                 });
 #pragma warning restore 612, 618

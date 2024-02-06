@@ -1,0 +1,75 @@
+﻿@Html.AntiForgeryToken()
+@model OroSmart.Models.Customer
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Customer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/Customers/customer.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#customerInfo">Customer Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#workLocation">Customer Work Location</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="customerInfo">
+                <h2 class="text-center">Add a Customer</h2>
+                <form asp-controller="Customer" asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Customer Name</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="VAT" class="control-label">VAT</label>
+                        <input asp-for="VAT" class="form-control" />
+                        <span asp-validation-for="VAT" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DateOfRegistration" class="control-label">Date of Registration</label>
+                        <input asp-for="DateOfRegistration" type="date" class="form-control" />
+                        <span asp-validation-for="DateOfRegistration" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input asp-for="Active" class="form-check-input" />
+                            <label asp-for="Active" class="form-check-label">Active</label>
+                        </div>
+                        <span asp-validation-for="Active" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="workLocation">
+                <!-- Add content for Customer Work Location tab here -->
+                <h2 class="text-center">Customer Work Location</h2>
+                <!-- Add your content for Customer Work Location here -->
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
