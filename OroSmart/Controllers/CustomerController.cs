@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OroSmart.Data;
+using OroSmart.Data.ViewModels;
 using OroSmart.Models;
 using System;
 using System.Linq;
@@ -107,12 +108,18 @@ namespace OroSmart.Controllers
 
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
+                return RedirectToAction(nameof(Edit), new { id = customer.Id });
+
             }
             return View(customer);
         }
 
-        //Edit
+        
+
+
+       
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -126,8 +133,17 @@ namespace OroSmart.Controllers
                 return NotFound();
             }
 
-            return View(customer);
+            var workLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(c => c.CustomerId == id);
+
+            var viewModel = new CustomerViewModel
+            {
+                Customer = customer,
+                WorkLocation = workLocation
+            };
+
+            return View(viewModel);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -174,6 +190,8 @@ namespace OroSmart.Controllers
             return View(customer);
         }
 
+
+
         //View
         public async Task<IActionResult> View(int? id)
         {
@@ -189,7 +207,16 @@ namespace OroSmart.Controllers
                 return NotFound();
             }
 
-            return View(customer);
+            var workLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(c => c.CustomerId == id);
+
+            var viewModel = new CustomerViewModel
+            {
+                Customer = customer,
+                WorkLocation = workLocation
+            };
+
+            return View(viewModel);
+
         }
 
 

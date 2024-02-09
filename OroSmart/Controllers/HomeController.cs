@@ -15,17 +15,20 @@ namespace OroSmart.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
+        
+        private readonly ILogger<HomeController> _logger2;
 
         public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            AppDbContext context)
+            AppDbContext context,
+            ILogger<HomeController> logger2)
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _logger2 = logger2;
         }
 
         [Authorize]
@@ -38,6 +41,9 @@ namespace OroSmart.Controllers
             //var culture = new CultureInfo(selectedLanguage);
             //Thread.CurrentThread.CurrentCulture = culture;
             //Thread.CurrentThread.CurrentUICulture = culture;
+
+            _logger.LogInformation("User {UserName} accessed the Index action at {Timestamp}.", User.Identity.Name, DateTime.UtcNow);
+
 
             return View();
         }

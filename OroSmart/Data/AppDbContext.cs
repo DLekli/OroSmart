@@ -11,6 +11,8 @@ namespace OroSmart.Data
         }
         public DbSet<UserLoginHistory> UserLoginHistories { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomersWorkLocation> CustomersWorkLocations { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +30,14 @@ namespace OroSmart.Data
                 .WithMany(u => u.CustomersLastUpdated)
                 .HasForeignKey(c => c.last_update_user_id)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CustomersWorkLocation>()
+                .HasKey(cwl => cwl.Id);
+
+            modelBuilder.Entity<CustomersWorkLocation>()
+                .HasOne(cwl => cwl.Customer)
+                .WithOne(c => c.WorkLocation)
+                .HasForeignKey<CustomersWorkLocation>(cwl => cwl.CustomerId);
         }
 
     }

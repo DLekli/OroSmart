@@ -1,5 +1,6 @@
-﻿@model OroSmart.Models.Customer
-
+﻿@* @model OroSmart.Models.Customer *@
+@using OroSmart.Data.ViewModels;
+@model CustomerViewModel;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,31 +27,31 @@
                 <form>
                     <div class="form-group">
                         <label class="control-label">Customer Name</label>
-                        <input class="form-control" value="@Model.Name" readonly />
+                        <input class="form-control" value="@Model.Customer.Name" readonly />
                     </div>
 
                     <div class="form-group">
                         <label class="control-label">VAT</label>
-                        <input class="form-control" value="@Model.VAT" readonly />
+                        <input class="form-control" value="@Model.Customer.VAT" readonly />
                     </div>
 
                     <div class="form-group">
                         <label class="control-label">Date of Registration</label>
-                        <input type="date" class="form-control" value="@Model.DateOfRegistration.ToString("yyyy-MM-dd")" readonly />
+                        <input type="date" class="form-control" value="@Model.Customer.DateOfRegistration.ToString("yyyy-MM-dd")" readonly />
                     </div>
 
                     <div class="form-group">
                         <label class="form-check-label">Active</label>
-                        <input class="form-check-input" type="checkbox" style="margin-left: 20px;" @(Model.Active ? "checked" : "") disabled />
+                        <input class="form-check-input" type="checkbox" style="margin-left: 20px;" @(Model.Customer.Active ? "checked" : "") disabled />
                     </div>
                 </form>
 
                 <div class="row">
                     <div class="col">
-                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-block">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary btn-block">Edit</a>
                     </div>
                     <div class="col">
-                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-block">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@Model.Customer.Id" class="btn btn-danger btn-block">Delete</a>
                     </div>
                     <div class="col">
                         <a asp-action="Index" class="btn btn-secondary btn-block">Back to List</a>
@@ -58,9 +59,47 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="workLocation">
-                <!-- Add content for Customer Work Location tab here -->
                 <h2 class="text-center">Customer Work Location</h2>
-                <!-- Add your content for Customer Work Location here -->
+        
+            <div class="form-group">
+                <label class="control-label">City</label>
+                    <input class="form-control" value="@(Model.WorkLocation != null ? Model.WorkLocation.City : string.Empty)"  readonly />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Address</label>
+                    <input class="form-control" value="@(Model.WorkLocation != null ? Model.WorkLocation.Address : string.Empty)" readonly />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Postal Code</label>
+                    <input class="form-control" value="@(Model.WorkLocation != null ? Model.WorkLocation.PostalCode : string.Empty)" readonly />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Headquarters</label>
+                    <input class="form-control" value="@(@Model.WorkLocation != null ? (Model.WorkLocation.IsHeadquarters ? "Yes" : "No") : string.Empty)" readonly />
+
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Notes</label>
+                    <textarea class="form-control" readonly>@(@Model.WorkLocation != null ? Model.WorkLocation.Notes : string.Empty)</textarea>
+
+            </div>
+
+                <div class="row">
+                    <div class="col">
+                        <a asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary btn-block">Edit</a>
+                    </div>
+                    <div class="col">
+                        <a asp-controller="Customer" asp-action="Delete" asp-route-id="@Model.Customer.Id" class="btn btn-danger btn-block">Delete</a>
+                    </div>
+                    <div class="col">
+                        <a asp-controller="Customer" asp-action="Index" class="btn btn-secondary btn-block">Back to List</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

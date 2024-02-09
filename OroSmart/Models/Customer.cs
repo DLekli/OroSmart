@@ -1,8 +1,11 @@
-﻿namespace OroSmart.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OroSmart.Models
 {
     public class Customer
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public string VAT { get; set; }
         public DateTime DateOfRegistration { get; set; }
@@ -17,6 +20,8 @@
         public ApplicationUser CustomersLastUpdated { get; set; }
 
         public DateTime last_update_Timestamp { get; set; }
+
+        public CustomersWorkLocation? WorkLocation { get; set; }
     }
 
 }
