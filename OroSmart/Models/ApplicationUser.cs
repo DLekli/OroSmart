@@ -16,5 +16,8 @@ namespace OroSmart.Models
         public ICollection<Customer> CustomersAdded { get; set; }
 
         public ICollection<Customer> CustomersLastUpdated { get; set; }
+
+        public  List<CustomersWorkLocation> WorkLocations { get; set; }
+
     }
 }

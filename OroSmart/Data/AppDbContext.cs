@@ -33,6 +33,11 @@ namespace OroSmart.Data
 
             modelBuilder.Entity<CustomersWorkLocation>()
                 .HasKey(cwl => cwl.Id);
+            modelBuilder.Entity<CustomersWorkLocation>()
+               .HasOne(cwl => cwl.ReferencePerson)
+               .WithMany(c => c.WorkLocations)
+               .HasForeignKey(cwl => cwl.ReferencePersonId)
+               .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<CustomersWorkLocation>()
                 .HasOne(cwl => cwl.Customer)

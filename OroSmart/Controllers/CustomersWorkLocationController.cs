@@ -6,6 +6,7 @@ using OroSmart.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace OroSmart.Controllers
 {
@@ -72,6 +73,8 @@ namespace OroSmart.Controllers
                         existingWorkLocation.PostalCode = workLocation.PostalCode;
                         existingWorkLocation.IsHeadquarters = workLocation.IsHeadquarters;
                         existingWorkLocation.Notes = workLocation.Notes;
+                        existingWorkLocation.ReferencePersonId = workLocation.ReferencePersonId; 
+
                     }
 
                     await _context.SaveChangesAsync();
@@ -82,6 +85,7 @@ namespace OroSmart.Controllers
 
                 return RedirectToAction("Index", "Customer");
             }
+           
             return View(workLocation);
         }
 
