@@ -1,4 +1,6 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +21,7 @@
     @inject LanguageService language;
 
 <body>
+    
 
     <div class="wrapper">
         <!-- Sidebar  -->
@@ -30,26 +33,24 @@
 
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
-                        Pages
                     </li>
-
 
                     @if (User.IsInRole("Admin"))
                     {
-                        <li class="sidebar-item">
+                        <li class="sidebar-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "UserLoginHistory" ? "active" : "")">
                             <a class="sidebar-link" asp-controller="Account" asp-action="UserLoginHistory">
-                                <i class="bi bi-people"></i> <span class="align-middle">@language.Getkey("userlogin")</span>
+                                <i class="bi bi-server"></i> <span class="align-middle">@language.Getkey("userlogin")</span>
                             </a>
                         </li>
                     }
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Customer" && ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
                         <a class="sidebar-link" asp-controller="Customer" asp-action="Index">
                             <i class="bi bi-people"></i> <span class="align-middle">@language.Getkey("customers")</span>
                         </a>
                     </li>
-
                 </ul>
+
 
 
             </div>
@@ -76,14 +77,32 @@
                                     <div class="user">
                                         <h3>@User.Identity.Name</h3>
                                     </div>
-                                    <div class="img-box">
-                                        <img src="~/img/User/user.png" alt="some user image">
+                                    <div class="img-box" style="box-shadow: 0 0 5px;">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            var currentUser = await UserManager.GetUserAsync(User);
+
+                                            if (currentUser != null)
+                                            {
+                                                string pictureUrl = currentUser.Picture;
+
+                                                if (!string.IsNullOrEmpty(pictureUrl))
+                                                {
+                                                    <img src="@pictureUrl" alt="User Profile Picture">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/img/User/user.png" alt="Default Profile Picture">
+                                                }
+                                            }
+                                        }
                                     </div>
                                 </div>
+
                                 <div class="menu">
                                     <ul>
-                                        <li><a asp-controller="Account" asp-action="Settings"><i class="bi bi-gear"></i>&nbsp;Settings</a></li>
-                                        <li><a asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" data-method="post"><i class="bi bi-box-arrow-right"></i>&nbsp;Sign Out</a></li>
+                                        <li><a asp-controller="Account" asp-action="Settings"><i class="bi bi-gear"></i>&nbsp;@language.Getkey("settings")</a></li>
+                                        <li><a asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" data-method="post"><i class="bi bi-box-arrow-right"></i>&nbsp;@language.Getkey("logout")</a></li>
                                     </ul>
                                 </div>
 

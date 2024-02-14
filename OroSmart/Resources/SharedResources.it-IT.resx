@@ -117,29 +117,101 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="accsettings" xml:space="preserve">
+    <value>Impostazioni dell'account</value>
+  </data>
+  <data name="actions" xml:space="preserve">
+    <value>Azioni</value>
+  </data>
+  <data name="active" xml:space="preserve">
+    <value>Attivo</value>
+  </data>
+  <data name="addcustomer" xml:space="preserve">
+    <value>Aggiungi cliente</value>
+  </data>
+  <data name="address" xml:space="preserve">
+    <value>Indirizzo</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>Torna alla lista</value>
+  </data>
   <data name="building" xml:space="preserve">
     <value>creazione di app Web con ASP.NET Core</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="changepassword" xml:space="preserve">
+    <value>Cambiare la password</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>Città</value>
   </data>
   <data name="cpassword" xml:space="preserve">
     <value>Conferma password</value>
   </data>
+  <data name="create" xml:space="preserve">
+    <value>Creare</value>
+  </data>
+  <data name="createcustomer" xml:space="preserve">
+    <value>Crea cliente</value>
+  </data>
+  <data name="customerinfo" xml:space="preserve">
+    <value>Informazioni sul Cliente</value>
+  </data>
   <data name="customers" xml:space="preserve">
     <value>Clienti</value>
+  </data>
+  <data name="customerwork" xml:space="preserve">
+    <value>Luogo di lavoro del cliente</value>
   </data>
   <data name="dashboard" xml:space="preserve">
     <value>Pannello di controllo</value>
   </data>
+  <data name="dateofregistration" xml:space="preserve">
+    <value>Data di registrazione</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Eliminare</value>
+  </data>
+  <data name="deletecustomer" xml:space="preserve">
+    <value>Elimina cliente</value>
+  </data>
+  <data name="deletesentence" xml:space="preserve">
+    <value>Sei sicuro di voler eliminare questo cliente?</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Modificare</value>
+  </data>
+  <data name="editcustomer" xml:space="preserve">
+    <value>Modifica cliente</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>Indirizzo e-mail</value>
+  </data>
+  <data name="firstentryuser" xml:space="preserve">
+    <value>Utente di primo ingresso</value>
   </data>
   <data name="fname" xml:space="preserve">
     <value>Nome e cognome</value>
   </data>
+  <data name="headquarters" xml:space="preserve">
+    <value>Sede centrale</value>
+  </data>
   <data name="home" xml:space="preserve">
     <value>Casa</value>
   </data>
+  <data name="info" xml:space="preserve">
+    <value>Informazioni</value>
+  </data>
   <data name="language" xml:space="preserve">
     <value>Lingua</value>
+  </data>
+  <data name="lastupdatetimestamp" xml:space="preserve">
+    <value>Timestamp dell'ultimo aggiornamento</value>
+  </data>
+  <data name="lastupdateuser" xml:space="preserve">
+    <value>Ultimo aggiornamento utente</value>
   </data>
   <data name="learn-about" xml:space="preserve">
     <value>Informazioni sulla </value>
@@ -147,26 +219,86 @@
   <data name="login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="loginhistory" xml:space="preserve">
+    <value>Cronologia degli accessi</value>
+  </data>
+  <data name="loginip" xml:space="preserve">
+    <value>Indirizzo IP di accesso</value>
+  </data>
+  <data name="logintime" xml:space="preserve">
+    <value>Orario di accesso</value>
+  </data>
   <data name="logout" xml:space="preserve">
     <value>Disconnettersi</value>
+  </data>
+  <data name="logouttime" xml:space="preserve">
+    <value>Orario di disconnessione</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="newpassword" xml:space="preserve">
+    <value>Nuova Password</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>Prossimo</value>
+  </data>
+  <data name="notes" xml:space="preserve">
+    <value>Appunti</value>
+  </data>
+  <data name="oldpassword" xml:space="preserve">
+    <value>Vecchia Password</value>
   </data>
   <data name="password" xml:space="preserve">
     <value>Parola d'ordine</value>
   </data>
+  <data name="photo" xml:space="preserve">
+    <value>Aggiungere una foto</value>
+  </data>
+  <data name="postalcode" xml:space="preserve">
+    <value>Codice Postale</value>
+  </data>
+  <data name="previews" xml:space="preserve">
+    <value>Anteprime</value>
+  </data>
   <data name="privacy" xml:space="preserve">
     <value>Privacy</value>
+  </data>
+  <data name="reference" xml:space="preserve">
+    <value>Referente</value>
   </data>
   <data name="register" xml:space="preserve">
     <value>Registrati</value>
   </data>
+  <data name="savechanges" xml:space="preserve">
+    <value>Salvare le modifiche</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Ricerca</value>
+  </data>
   <data name="settings" xml:space="preserve">
     <value>Impostazioni</value>
+  </data>
+  <data name="settingssentence" xml:space="preserve">
+    <value>Seleziona un'opzione dal menu a sinistra.</value>
   </data>
   <data name="uname" xml:space="preserve">
     <value>Nome utente</value>
   </data>
+  <data name="uploadpicture" xml:space="preserve">
+    <value>Carica un'immagine</value>
+  </data>
+  <data name="userinfo" xml:space="preserve">
+    <value>Informazioni utente</value>
+  </data>
   <data name="userlogin" xml:space="preserve">
     <value>Login utente</value>
+  </data>
+  <data name="VAT" xml:space="preserve">
+    <value>I.V.A</value>
+  </data>
+  <data name="viewcustomer" xml:space="preserve">
+    <value>Visualizza cliente</value>
   </data>
   <data name="welcome" xml:space="preserve">
     <value>Benvenuto</value>

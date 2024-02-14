@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject LanguageService language
+@if (User.Identity.IsAuthenticated)
+{
+    <link href="@Url.Content("~/css/animation.css")" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <div class="container" style="margin-top:30px;">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-5 mb-3">
+                <div class="card">
+                    <div class="card-header">@language.Getkey("settings")</div>
+                    <div class="list-group list-group-flush">
+                        <a asp-controller="Settings" asp-action="userInfo" class="list-group-item list-group-item-action"> <i class="bi bi-person"></i> @language.Getkey("userinfo")</a>
+                        <a asp-controller="Settings" asp-action="ChangePassword" class="list-group-item list-group-item-action"> <i class="bi bi-lock"></i> @language.Getkey("changepassword")</a>
+                        <a asp-controller="Settings" asp-action="Picture" class="list-group-item list-group-item-action"> <i class="bi bi-camera"></i> @language.Getkey("photo")</a>
+                        <a asp-controller="Settings" asp-action="DisplayLanguages" class="list-group-item list-group-item-action"> <i class="bi bi-globe-europe-africa"></i> @language.Getkey("language")</a>
+
+                        <!-- Add more options as needed -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-7">
+                <div class="card">
+
+                    <div class="card-body" id="settingsContent">
+                        <!-- Initial content or empty area for selected settings -->
+                        @if (TempData.ContainsKey("SuccessMessage"))
+                        {
+                            <div class="alert alert-success" role="alert">
+                                @TempData["SuccessMessage"]
+                            </div>
+                        }
+
+                        <div class="container">
+                            <div class="panel">
+                                <div class="button_outer">
+                                    <form method="post" enctype="multipart/form-data" action="@Url.Action("Picture", "Settings")">
+                                    <input type="hidden" name="userId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+                                    <div class="btn_upload">
+                                        <input type="file" id="upload_file" name="file">
+                                         @language.Getkey("uploadpicture")
+                                    </div>
+                                    <div class="processing_bar"></div>
+                                    <div class="success_box">
+                                            <button type="submit" class="success_button"></button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="error_msg"></div>
+                            <div class="uploaded_file_view" id="uploaded_view">
+                                <span class="file_remove">X</span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="@Url.Content("~/js/animation.js")"></script>
+    <script src="https://kit.fontawesome.com/bdb4dc8795.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+}
+

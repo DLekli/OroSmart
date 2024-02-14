@@ -19,5 +19,7 @@ namespace OroSmart.Models
 
         public  List<CustomersWorkLocation> WorkLocations { get; set; }
 
+        public string Picture { get; set; }
+
     }
 }

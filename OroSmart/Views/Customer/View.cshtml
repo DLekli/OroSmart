@@ -1,12 +1,14 @@
 ﻿@* @model OroSmart.Models.Customer *@
 @using OroSmart.Data.ViewModels;
 @model CustomerViewModel;
+@inject LanguageService language;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Customer</title>
+    <title>@language.Getkey("viewcustomer")</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/Customers/customer.css" asp-append-version="true" />
 
@@ -15,88 +17,88 @@
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#customerInfo">Customer Info</a>
+                <a class="nav-link active" data-toggle="tab" href="#customerInfo">@language.Getkey("customerinfo")</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#workLocation">Customer Work Location</a>
+                <a class="nav-link" data-toggle="tab" href="#workLocation">@language.Getkey("customerwork")</a>
             </li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="customerInfo">
-                <h2 class="text-center">Customer Information</h2>
+                <h2 class="text-center">@language.Getkey("customerinfo")</h2>
                 <form>
                     <div class="form-group">
-                        <label class="control-label">Customer Name</label>
+                        <label class="control-label">@language.Getkey("name")</label>
                         <input class="form-control" value="@Model.Customer.Name" readonly />
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">VAT</label>
+                        <label class="control-label">@language.Getkey("VAT")</label>
                         <input class="form-control" value="@Model.Customer.VAT" readonly />
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Date of Registration</label>
+                        <label class="control-label">@language.Getkey("dateofregistration")</label>
                         <input type="date" class="form-control" value="@Model.Customer.DateOfRegistration.ToString("yyyy-MM-dd")" readonly />
                     </div>
 
                     <div class="form-group">
-                        <label class="form-check-label">Active</label>
+                        <label class="form-check-label">@language.Getkey("active")</label>
                         <input class="form-check-input" type="checkbox" style="margin-left: 20px;" @(Model.Customer.Active ? "checked" : "") disabled />
                     </div>
                 </form>
 
                 <div class="row">
                     <div class="col">
-                        <a asp-action="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary btn-block">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary btn-block">@language.Getkey("edit")</a>
                     </div>
                     <div class="col">
-                        <a asp-action="Delete" asp-route-id="@Model.Customer.Id" class="btn btn-danger btn-block">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@Model.Customer.Id" class="btn btn-danger btn-block">@language.Getkey("delete")</a>
                     </div>
                     <div class="col">
-                        <a asp-action="Index" class="btn btn-secondary btn-block">Back to List</a>
+                        <a asp-action="Index" class="btn btn-secondary btn-block">@language.Getkey("back")</a>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="workLocation">
-                <h2 class="text-center">Customer Work Location</h2>
+                <h2 class="text-center">@language.Getkey("customerwork")</h2>
         
             <div class="form-group">
-                <label class="control-label">City</label>
+                    <label class="control-label">@language.Getkey("city")</label>
                     <input class="form-control" value="@(Model.WorkLocation != null ? Model.WorkLocation.City : string.Empty)"  readonly />
             </div>
 
             <div class="form-group">
-                <label class="control-label">Address</label>
+                    <label class="control-label">@language.Getkey("address")</label>
                     <input class="form-control" value="@(Model.WorkLocation != null ? Model.WorkLocation.Address : string.Empty)" readonly />
             </div>
 
             <div class="form-group">
-                <label class="control-label">Postal Code</label>
+                    <label class="control-label">@language.Getkey("postalcode")</label>
                     <input class="form-control" value="@(Model.WorkLocation != null ? Model.WorkLocation.PostalCode : string.Empty)" readonly />
             </div>
 
             <div class="form-group">
-                <label class="control-label">Headquarters</label>
+                    <label class="control-label">@language.Getkey("headquarters")</label>
                     <input class="form-control" value="@(@Model.WorkLocation != null ? (Model.WorkLocation.IsHeadquarters ? "Yes" : "No") : string.Empty)" readonly />
 
             </div>
 
             <div class="form-group">
-                <label class="control-label">Notes</label>
+                    <label class="control-label">@language.Getkey("notes")</label>
                     <textarea class="form-control" readonly>@(@Model.WorkLocation != null ? Model.WorkLocation.Notes : string.Empty)</textarea>
 
             </div>
 
                 <div class="row">
                     <div class="col">
-                        <a asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary btn-block">Edit</a>
+                        <a asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary btn-block">@language.Getkey("edit")</a>
                     </div>
                     <div class="col">
-                        <a asp-controller="Customer" asp-action="Delete" asp-route-id="@Model.Customer.Id" class="btn btn-danger btn-block">Delete</a>
+                        <a asp-controller="Customer" asp-action="Delete" asp-route-id="@Model.Customer.Id" class="btn btn-danger btn-block">@language.Getkey("delete")</a>
                     </div>
                     <div class="col">
-                        <a asp-controller="Customer" asp-action="Index" class="btn btn-secondary btn-block">Back to List</a>
+                        <a asp-controller="Customer" asp-action="Index" class="btn btn-secondary btn-block">@language.Getkey("back")</a>
                     </div>
                 </div>
 

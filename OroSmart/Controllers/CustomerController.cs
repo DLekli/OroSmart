@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using OroSmart.Data.Pagination;
 
 namespace OroSmart.Controllers
 {
@@ -22,7 +23,6 @@ namespace OroSmart.Controllers
             _context = context;
             _userManager = userManager;
         }
-
         public async Task<IActionResult> Index(int? id, string name, string vat, DateTime? dateOfRegistration,
             bool? active, string firstEntryUser, string lastUpdateUser, DateTime? lastUpdateTimestamp, int page = 1)
         {
@@ -68,11 +68,7 @@ namespace OroSmart.Controllers
 
             var totalItems = await query.CountAsync();
 
-            var totalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
-
-            page = Math.Max(1, Math.Min(totalPages, page));
-
-            var customers = await query.Skip((page - 1) * PageSize).Take(PageSize).ToListAsync();
+            var paginatedCustomers = PaginatedList<Customer>.Create(query, page, PageSize);
 
             ViewBag.Id = id;
             ViewBag.Name = name;
@@ -82,10 +78,8 @@ namespace OroSmart.Controllers
             ViewBag.FirstEntryUser = firstEntryUser;
             ViewBag.LastUpdateUser = lastUpdateUser;
             ViewBag.LastUpdateTimestamp = lastUpdateTimestamp;
-            ViewBag.Page = page;
-            ViewBag.TotalPages = totalPages;
 
-            return View(customers);
+            return View(paginatedCustomers);
         }
 
         //Create

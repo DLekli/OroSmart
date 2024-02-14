@@ -7,10 +7,11 @@
             <!-- Sidebar -->
             <div class="col-md-5 mb-3">
                 <div class="card">
-                    <div class="card-header">Settings Menu</div>
+                    <div class="card-header">@language.Getkey("settings")</div>
                     <div class="list-group list-group-flush">
-                        <a asp-controller="Settings" asp-action="userInfo" class="list-group-item list-group-item-action"> <i class="bi bi-person"></i> User Info</a>
-                        <a asp-controller="Settings" asp-action="ChangePassword" class="list-group-item list-group-item-action"> <i class="bi bi-lock"></i> Change Password</a>
+                        <a asp-controller="Settings" asp-action="userInfo" class="list-group-item list-group-item-action"> <i class="bi bi-person"></i> @language.Getkey("userinfo")</a>
+                        <a asp-controller="Settings" asp-action="ChangePassword" class="list-group-item list-group-item-action"> <i class="bi bi-lock"></i> @language.Getkey("changepassword")</a>
+                        <a asp-controller="Settings" asp-action="Picture" class="list-group-item list-group-item-action"> <i class="bi bi-camera"></i> @language.Getkey("photo")</a>
                         <a asp-controller="Settings" asp-action="DisplayLanguages" class="list-group-item list-group-item-action"> <i class="bi bi-globe-europe-africa"></i> @language.Getkey("language")</a>
 
                         <!-- Add more options as needed -->
@@ -21,11 +22,11 @@
             <!-- Main Content -->
             <div class="col-md-7">
                 <div class="card">
-                    <div class="card-header">Account Settings</div>
+                    <div class="card-header">@language.Getkey("accsettings")</div>
 
                     <div class="card-body" id="settingsContent">
                         <!-- Initial content or empty area for selected settings -->
-                        Select an option from the menu on the left.
+                        @language.Getkey("settingssentence")
                     </div>
                 </div>
             </div>

@@ -35,3 +35,12 @@ body {
     background-color: #222e3c;
     color: white;
 }
+.img-fluid {
+    border-radius: 100%;
+    width: 150px;
+    height: 150px;
+    margin-left: 350px;
+    margin-top: -200px;
+    box-shadow: 0 0 15px;
+    object-fit: cover;
+}

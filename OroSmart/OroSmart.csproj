@@ -44,6 +44,7 @@
     <Folder Include="wwwroot\css\Crm\NewFolder\" />
     <Folder Include="wwwroot\css\Login\" />
     <Folder Include="wwwroot\js\Crm\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,17 +20,20 @@ namespace OroSmart.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IStringLocalizer<SettingsController> _localizer;
+        private readonly IWebHostEnvironment _environment;
 
         public SettingsController(UserManager<ApplicationUser> usermanager,
             SignInManager<ApplicationUser> signInManager,
             AppDbContext context,
-            IStringLocalizer<SettingsController> localizer
+            IStringLocalizer<SettingsController> localizer,
+            IWebHostEnvironment environment
             )
         {
             _userManager = usermanager;
             _signInManager = signInManager;
             _context = context;
             _localizer = localizer;
+            _environment = environment;
         }
 
         public IActionResult Index()
@@ -108,21 +111,6 @@ namespace OroSmart.Controllers
         }
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> ChangeLanguage(string culture)
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
-
-        //    if (user != null)
-        //    {
-        //        await _languageInterface.SetUserLanguageAsync(user.Id, culture);
-        //    }
-
-        //    return RedirectToAction("DisplayLanguages", "Settings");
-        //}
-
-
-
         [HttpPost]
         public async Task<IActionResult> ChangeLanguage(string culture)
         {
@@ -133,14 +121,10 @@ namespace OroSmart.Controllers
                 culture = Request.HttpContext.Features.Get<IRequestCultureFeature>()?.RequestCulture.Culture.Name;
             }
 
-        //    Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
-        //CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-        //new CookieOptions() { Expires = DateTimeOffset.UtcNow.AddYears(1) });
-
             if (user != null)
             {
-                user.Language = culture; // Update user's language preference
-                await _context.SaveChangesAsync(); // Save changes to the database
+                user.Language = culture;
+                await _context.SaveChangesAsync(); 
             }
 
             var cookieValue = CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture));
@@ -157,6 +141,63 @@ namespace OroSmart.Controllers
 
             return View("DisplayLanguages");
         }
+
+
+        public IActionResult Picture() 
+        {
+            return View(); 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Picture(IFormFile file, string userId)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Invalid file");
+            }
+
+            // Check file type
+            string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+            string fileExtension = Path.GetExtension(file.FileName).ToLower();
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                return BadRequest("File type not allowed");
+            }
+
+            string uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
+
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                user.Picture = Path.Combine(_environment.WebRootPath, "\\uploads", uniqueFileName);
+                await _userManager.UpdateAsync(user);
+
+                ViewBag.ProfilePictureUrl = user.Picture;
+            }
+            else
+            {
+                ViewBag.ProfilePictureUrl = "\\img\\User\\user.png";
+            }
+
+            TempData["SuccessMessage"] = "File uploaded successfully!";
+
+            return View();
+        }
+
     }
 }
 

@@ -1,29 +1,64 @@
 ﻿@using OroSmart.Data.Pagination;
+@inject LanguageService language
 
 @model PaginatedList<UserLoginHistory>
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
-    <table class="table" id="styleTable">
-        <thead>
-            <tr>
-                <th>Full Name</th>
-                <th>Login Time</th>
-                <th>Login IP Address</th>
-                <th>Logout Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var loginHistory in Model)
-            {
-                <tr>
-                    <td>@loginHistory.FullName</td>
-                    <td>@(loginHistory.LoginTime.HasValue ? loginHistory.LoginTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
-                    <td>@(loginHistory.LoginIpAddress ?? "-")</td>
-                    <td>@(loginHistory.LogoutTime.HasValue ? loginHistory.LogoutTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card" style="border-radius: 20px;">
+        <div class="card-body p-3">
+            <h5 class="card-title">@language.Getkey("loginhistory")</h5>
+            <div class="table-responsive">
+                <table class="table" id="styleTable">
+                    <thead>
+                        <tr>
+                            <th>@language.Getkey("fname")</th>
+                            <th>@language.Getkey("logintime")</th>
+                            <th>@language.Getkey("loginip")</th>
+                            <th>@language.Getkey("logouttime")</th>
+                        </tr>
+
+                        <tr>
+                            <form id="searchForm">
+
+                                <td>
+                                <input id="userNameSearch_query" type="text" class="form-control" placeholder="@language.Getkey("fname")" value="@ViewBag.userNameSearch">
+                                </td>
+
+                                <td>
+                                <input id="loginTimeSearch_query" type="datetime-local" class="form-control" placeholder="@language.Getkey("logintime")" value="@ViewBag.LoginTimeSearch">
+                                </td>
+
+                                <td>
+                                <input id="ipAddressSearch_query" type="text" class="form-control" placeholder="@language.Getkey("loginip")" value="@ViewBag.IPAddressSearch">
+                                </td>
+
+                                <td>
+                                <input id="logoutTimeSearch_query" type="datetime-local" class="form-control" placeholder="@language.Getkey("logouttime")" value="@ViewBag.LogoutTimeSearch">
+                                </td>
+
+                                <td>
+                                <button id="searchButton_query" class="btn" type="submit">
+                                    <i class="bi bi-search" id="searchButton"></i> @language.Getkey("search")
+                                </button>
+                                </td>
+                            </form>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var loginHistory in Model)
+                        {
+                            <tr>
+                                <td>@loginHistory.FullName</td>
+                                <td>@(loginHistory.LoginTime.HasValue ? loginHistory.LoginTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
+                                <td>@(loginHistory.LoginIpAddress ?? "-")</td>
+                                <td>@(loginHistory.LogoutTime.HasValue ? loginHistory.LogoutTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 }
 
 @{
@@ -37,7 +72,7 @@
        asp-route-ipAddressSearch="@ViewBag.IPAddressSearch"
        asp-route-loginTimeSearch="@ViewBag.LoginTimeSearch"
        asp-route-logoutTimeSearch="@ViewBag.LogoutTimeSearch"
-       class="btn btn-default @prevDisabled">Previous</a>
+       class="btn btn-default @prevDisabled">@language.Getkey("previews")</a>
 
     <div class="pagination-list">
         @if (Model.PageIndex > 3)
@@ -78,5 +113,5 @@
        asp-route-ipAddressSearch="@ViewBag.IPAddressSearch"
        asp-route-loginTimeSearch="@ViewBag.LoginTimeSearch"
        asp-route-logoutTimeSearch="@ViewBag.LogoutTimeSearch"
-       class="btn btn-default @nextDisabled">Next</a>
+       class="btn btn-default @nextDisabled">@language.Getkey("next")</a>
 </div>

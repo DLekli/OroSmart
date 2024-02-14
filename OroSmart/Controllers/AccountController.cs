@@ -77,7 +77,7 @@ namespace OroSmart.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult UserLoginHistory(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch, int pageNumber = 1, int pageSize = 10)
         {
-            var query = _context.UserLoginHistories.AsQueryable();
+            var query = _context.UserLoginHistories.OrderByDescending(u => u.LoginTime).AsQueryable();
 
             if (!string.IsNullOrEmpty(userNameSearch))
             {
@@ -127,7 +127,7 @@ namespace OroSmart.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult UserLoginHistoryOther(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch, int pageNumber = 1, int pageSize = 10)
         {
-            var query = _context.UserLoginHistories.AsQueryable();
+            var query = _context.UserLoginHistories.OrderByDescending(u => u.LoginTime).AsQueryable();
 
             if (!string.IsNullOrEmpty(userNameSearch))
             {
