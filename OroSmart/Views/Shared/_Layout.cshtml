@@ -18,22 +18,9 @@
 
 <body>
 
-    @section Script {
-        <script>
-            function toggleSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                if (sidebar.classList.contains('collapsed')) {
-                    sidebar.classList.remove('collapsed');
-                } else {
-                    sidebar.classList.add('collapsed');
-                }
-            }
-        </script>
-    }
-
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar" class="sidebar js-sidebar">
+        <nav id="sidebar" class="sidebar js-sidebar @((Context.Request.Cookies["sidebarState"] ?? "expanded") == "collapsed" ? "collapsed" : "")">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index">
                     <span class="align-middle">AdminKit </span>
@@ -66,7 +53,7 @@
 
         <div class="main">
             <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <a class="sidebar-toggle js-sidebar-toggle" onclick="toggleSidebar()">
+                <a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
                 </a>
                 <!-- Navbar  -->
@@ -143,11 +130,14 @@
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 
     <script src="@Url.Content("~/js/Crm/app.js")"></script>
     <script src="@Url.Content("~/js/UserDropdown/user.js")"></script>
+    <script src="@Url.Content("~/js/toggle.js")"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

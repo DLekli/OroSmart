@@ -75,9 +75,9 @@ namespace OroSmart.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult UserLoginHistory(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch, int pageNumber = 1, int pageSize = 10)
+        public IActionResult UserLoginHistory(string userNameSearch, string ipAddressSearch, DateTime? loginTimeSearch, DateTime? logoutTimeSearch, int pageNumber = 1, int pageSize = 30)
         {
-            var query = _context.UserLoginHistories.OrderByDescending(u => u.LoginTime).AsQueryable();
+            var query = _context.UserLoginHistories.OrderByDescending(u => u.LoginTime).Take(300).AsQueryable();
 
             if (!string.IsNullOrEmpty(userNameSearch))
             {
