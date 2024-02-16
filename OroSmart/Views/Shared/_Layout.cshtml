@@ -13,15 +13,23 @@
     <link href="@Url.Content("~/css/Crm/app.css")" rel="stylesheet" />
     <link href="@Url.Content("~/css/UserDropdown/user.css")" rel="stylesheet" />
 
-
-
-
-
 </head>
     @inject LanguageService language;
 
 <body>
-    
+
+    @section Script {
+        <script>
+            function toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar.classList.contains('collapsed')) {
+                    sidebar.classList.remove('collapsed');
+                } else {
+                    sidebar.classList.add('collapsed');
+                }
+            }
+        </script>
+    }
 
     <div class="wrapper">
         <!-- Sidebar  -->
@@ -58,21 +66,13 @@
 
         <div class="main">
             <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <a class="sidebar-toggle js-sidebar-toggle">
+                <a class="sidebar-toggle js-sidebar-toggle" onclick="toggleSidebar()">
                     <i class="hamburger align-self-center"></i>
                 </a>
                 <!-- Navbar  -->
                 <div class="navbar-collapse collapse">
-
-                    <ul class="navbar-nav navbar-align">
-
                         <ul class="navbar-nav navbar-align">
-
-
                             <li class="nav-item dropdown">
-
-
-
                                 <div class="profile">
                                     <div class="user">
                                         <h3>@User.Identity.Name</h3>
@@ -105,10 +105,6 @@
                                         <li><a asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" data-method="post"><i class="bi bi-box-arrow-right"></i>&nbsp;@language.Getkey("logout")</a></li>
                                     </ul>
                                 </div>
-
-
-
-
                             </li>
                         </ul>
                 </div>
@@ -121,8 +117,8 @@
             <footer class="footer" style="margin-top: auto;">
                 <div class="container-fluid">
                     <div class="row text-muted">
-                        
-                        <div class="col-6 text-end">
+
+                        <div class="col-6 text-end" style="margin-left:50%;">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
@@ -152,12 +148,7 @@
 
     <script src="@Url.Content("~/js/Crm/app.js")"></script>
     <script src="@Url.Content("~/js/UserDropdown/user.js")"></script>
-
-
-
-
-
     @await RenderSectionAsync("Scripts", required: false)
-</body>
 
+</body>
 </html>

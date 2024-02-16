@@ -155,19 +155,19 @@
                    asp-route-lastUpdateTimestamp="@ViewBag.LastUpdateTimestamp"
                    class="btn btn-secondary">@Model.TotalPages</a>
             }
+
+            <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)"
+               asp-route-id="@ViewBag.Id"
+               asp-route-name="@ViewBag.Name"
+               asp-route-vat="@ViewBag.VAT"
+               asp-route-dateOfRegistration="@ViewBag.DateOfRegistration"
+               asp-route-active="@ViewBag.Active"
+               asp-route-firstEntryUser="@ViewBag.FirstEntryUser"
+               asp-route-lastUpdateUser="@ViewBag.LastUpdateUser"
+               asp-route-lastUpdateTimestamp="@ViewBag.LastUpdateTimestamp"
+               class="btn btn-default @nextDisabled">@language.Getkey("next")</a>
         </div>
-
-        <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)"
-           asp-route-id="@ViewBag.Id"
-           asp-route-name="@ViewBag.Name"
-           asp-route-vat="@ViewBag.VAT"
-           asp-route-dateOfRegistration="@ViewBag.DateOfRegistration"
-           asp-route-active="@ViewBag.Active"
-           asp-route-firstEntryUser="@ViewBag.FirstEntryUser"
-           asp-route-lastUpdateUser="@ViewBag.LastUpdateUser"
-           asp-route-lastUpdateTimestamp="@ViewBag.LastUpdateTimestamp"
-           class="btn btn-default @nextDisabled">@language.Getkey("next")</a>
     </div>
-
+</div>
 
 <script src="https://kit.fontawesome.com/bdb4dc8795.js" crossorigin="anonymous"></script>

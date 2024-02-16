@@ -34,16 +34,7 @@ namespace OroSmart.Controllers
         [Authorize]
         public IActionResult Index(LoginVM loginVM)
         {
-            //var user = _userManager.GetUserAsync(User);
-
-            //var selectedLanguage = user.Language;
-
-            //var culture = new CultureInfo(selectedLanguage);
-            //Thread.CurrentThread.CurrentCulture = culture;
-            //Thread.CurrentThread.CurrentUICulture = culture;
-
             _logger.LogInformation("User {UserName} accessed the Index action at {Timestamp}.", User.Identity.Name, DateTime.UtcNow);
-
 
             return View();
         }

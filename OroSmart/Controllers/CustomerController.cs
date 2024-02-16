@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using OroSmart.Data.Pagination;
+using OroSmart.Data.Validator;
 
 namespace OroSmart.Controllers
 {
@@ -92,7 +93,10 @@ namespace OroSmart.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,VAT,DateOfRegistration,Active")] Customer customer)
         {
-            if (!ModelState.IsValid)
+            var validator = new CustomerValidator();
+            var validationResult = await validator.ValidateAsync(customer);
+
+            if (validationResult.IsValid && !ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
                 customer.first_entry_user_id = user.Id;
@@ -106,13 +110,24 @@ namespace OroSmart.Controllers
                 return RedirectToAction(nameof(Edit), new { id = customer.Id });
 
             }
-            return View(customer);
+
+            else
+            {
+                // If validation fails, add model errors to ModelState
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                // Return the view with the model to show the validation errors
+                var viewModel = new CustomerViewModel
+                {
+                    Customer = customer
+                };
+
+                return View(viewModel);
+            }
         }
-
-        
-
-
-       
 
         public async Task<IActionResult> Edit(int? id)
         {
