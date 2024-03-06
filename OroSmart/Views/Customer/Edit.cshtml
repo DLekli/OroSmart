@@ -24,10 +24,10 @@
                 <a class="nav-link" data-toggle="tab" href="#customerInfo">@language.Getkey("editcustomer")</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#workLocation">@language.Getkey("customerwork")</a>
+                <a class="nav-link" data-toggle="tab" href="#workLocation">Edit Customer Work Location</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#customercontact">Customer Contact</a>
+                <a class="nav-link" data-toggle="tab" href="#customercontact">Edit Customer Contact</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -132,7 +132,8 @@
 
                 <h2 class="text-center mt-3">Edit Customer Contact</h2> 
                 <form asp-controller="CustomerContacts" asp-action="EditCustomerContact" method="post">
-
+                    <input type="hidden" name="customerId" value="@Model.Customer.Id" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="form-group">
                         <label asp-for="CustomersContacts.ContactTypeId" class="control-label">Contact Type</label>
@@ -185,6 +186,9 @@
                         <button type="submit" class="btn btn-primary">@language.Getkey("savechanges")</button>
                     </div>
                 </form>
+                <div class="text-center">
+                    <a asp-controller="Customer" asp-action="Index">@language.Getkey("back")</a>
+                </div>
             </div> 
            
 

@@ -41,7 +41,7 @@ namespace OroSmart.Data
                .HasOne(cwl => cwl.ReferencePerson)
                .WithMany(c => c.WorkLocations)
                .HasForeignKey(cwl => cwl.ReferencePersonId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<CustomersWorkLocation>()
                 .HasOne(cwl => cwl.Customer)
