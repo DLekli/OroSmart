@@ -67,7 +67,7 @@ namespace OroSmart.Controllers
                     }
                     else
                     {
-                        // Update work location data
+                      
                         existingWorkLocation.City = workLocation.City;
                         existingWorkLocation.Address = workLocation.Address;
                         existingWorkLocation.PostalCode = workLocation.PostalCode;

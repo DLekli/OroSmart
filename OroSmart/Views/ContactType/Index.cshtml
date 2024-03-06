@@ -26,7 +26,7 @@
                         <th style="width: 120px;">@language.Getkey("actions")</th>
                     </tr>
                     <tr>
-                        <!-- Add search filters -->
+                        
                         <form method="get" class="form-horizontal">
                         <td>
                             <input type="text" class="form-control" name="id" placeholder="ID" value="@ViewBag.Id" />
@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <!-------------------- Pagination Logic ----------------------->
+   
     <div class="pagination justify-content-center">
         <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled">@language.Getkey("previous")</a>
 
