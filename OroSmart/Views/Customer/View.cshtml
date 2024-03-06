@@ -19,7 +19,10 @@
                 <a class="nav-link active" data-toggle="tab" href="#customerInfo">@language.Getkey("customerinfo")</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#workLocation">@language.Getkey("customerwork")</a>
+                <a class="nav-link" data-toggle="tab" href="#workLocation">Customer Work Location Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#customercontact">Customer Contact Info</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -60,8 +63,8 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="workLocation">
-                <h2 class="text-center">@language.Getkey("customerwork")</h2>
-        
+                <h2 class="text-center">Customer Work Location Info </h2>
+         <form>
             <div class="form-group">
                     <label class="control-label">@language.Getkey("city")</label>
                     <input class="form-control" value="@(Model.WorkLocation != null ? Model.WorkLocation.City : string.Empty)"  readonly />
@@ -82,13 +85,17 @@
                     <input class="form-control" value="@(@Model.WorkLocation != null ? (Model.WorkLocation.IsHeadquarters ? "Yes" : "No") : string.Empty)" readonly />
 
             </div>
+                <div class="form-group">
+                    <label class="control-label">@language.Getkey("referenceperson")</label>
+                    <input class="form-control" value="@ViewBag.ReferencePersonName" readonly />
+                </div>
 
             <div class="form-group">
                     <label class="control-label">@language.Getkey("notes")</label>
                     <textarea class="form-control" readonly>@(@Model.WorkLocation != null ? Model.WorkLocation.Notes : string.Empty)</textarea>
 
             </div>
-
+                </form>
                 <div class="row">
                     <div class="col">
                         <a asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary btn-block">@language.Getkey("edit")</a>
@@ -102,6 +109,52 @@
                 </div>
 
             </div>
+            <div class="tab-pane fade" id="customercontact">
+                <h2 class="text-center">Customer Contact Info</h2>
+                <form>
+                <div class="form-group">
+                    <label class="control-label">@language.Getkey("contacttype")</label>
+                    <input class="form-control" value="@ViewBag.ContactTypeName" readonly />
+                </div>
+
+
+
+                    <div class="form-group">
+                        <label class="control-label">@language.Getkey("firstname")</label>
+                        <input class="form-control" value="@Model.CustomersContacts.FirstName" readonly />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">@language.Getkey("lastname")</label>
+                        <input class="form-control" value="@Model.CustomersContacts.LastName" readonly />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">@language.Getkey("contact")</label>
+                        <input class="form-control" value="@Model.CustomersContacts.Contact" readonly />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">@language.Getkey("note")</label>
+                        <textarea class="form-control" readonly>@Model.CustomersContacts.Note</textarea>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col">
+                        <a asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary btn-block">@language.Getkey("edit")</a>
+                    </div>
+                    <div class="col">
+                        <a asp-controller="Customer" asp-action="Delete" asp-route-id="@Model.Customer.Id" class="btn btn-danger btn-block">@language.Getkey("delete")</a>
+                    </div>
+                    <div class="col">
+                        <a asp-controller="Customer" asp-action="Index" class="btn btn-secondary btn-block">@language.Getkey("back")</a>
+                    </div>
+                </div>
+                
+            </div>
+
+
+
         </div>
     </div>
 

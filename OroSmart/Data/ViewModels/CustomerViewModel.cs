@@ -1,4 +1,5 @@
 ﻿using OroSmart.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace OroSmart.Data.ViewModels
 {
@@ -6,5 +7,10 @@ namespace OroSmart.Data.ViewModels
     {
         public Customer? Customer { get; set; }
         public CustomersWorkLocation? WorkLocation { get; set; }
+
+       // [Required]
+
+        public CustomersContacts? CustomersContacts { get; set; }
+        public ContactType? ContactTypes { get; set; }
     }
 }

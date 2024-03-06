@@ -1,0 +1,85 @@
+﻿@model OroSmart.Data.Pagination.PaginatedList<OroSmart.Models.ContactType>
+@inject LanguageService language;
+
+@{
+    var prevDisabled = Model.PageIndex == 1 ? "disabled" : "";
+    var nextDisabled = Model.PageIndex == Model.TotalPages ? "disabled" : "";
+}
+
+<div class="container">
+    <h2 style="margin-left:10px; font-size:2.53125rem;">Contact Type</h2>
+
+    <a class="btn btn-success btn-lg" asp-controller="ContactType" asp-action="Create" style="max-width: 250px;margin-left: 10px;border-radius: 10px;">
+        <i class="bi bi-person-plus"></i> Add Contact Type
+    </a>
+
+    <p></p>
+
+    <div class="card mt-4" style="border-radius: 20px;">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">ID</th>
+                        <th>@language.Getkey("name")</th>
+                        <th>@language.Getkey("note")</th>
+                        <th style="width: 120px;">@language.Getkey("actions")</th>
+                    </tr>
+                    <tr>
+                        <!-- Add search filters -->
+                        <form method="get" class="form-horizontal">
+                        <td>
+                            <input type="text" class="form-control" name="id" placeholder="ID" value="@ViewBag.Id" />
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" name="name" placeholder="@language.Getkey("name")" value="@ViewBag.Name" />
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" name="note" placeholder="@language.Getkey("note")" value="@ViewBag.Note" />
+                        </td>
+
+                        <td>
+                            <div style="display: inline-block;">
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass" style="width: 50px;"></i></button>
+                            </div>
+                        </td>
+                        </form>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var contactType in Model)
+                    {
+                        <tr>
+                            <td>@contactType.Id</td>
+                            <td>@contactType.Name</td>
+                            <td>@contactType.Note</td>
+                            <td>
+                                <a asp-action="View" asp-route-id="@contactType.Id"><i class="bi bi-eye" style="font-size: 23px;"></i></a> |
+                                <a asp-action="Edit" asp-route-id="@contactType.Id"><i class="bi bi-pencil-square" style="font-size: 23px;"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@contactType.Id"><i class="bi bi-trash" style="font-size: 23px;"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-------------------- Pagination Logic ----------------------->
+    <div class="pagination justify-content-center">
+        <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-default @prevDisabled">@language.Getkey("previous")</a>
+
+        <div class="pagination-list">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <a asp-action="Index" asp-route-page="@i" class="btn @(i == Model.PageIndex ? "btn-primary" : "btn-secondary")">@i</a>
+            }
+        </div>
+
+        <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-default @nextDisabled">@language.Getkey("next")</a>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/bdb4dc8795.js" crossorigin="anonymous"></script>

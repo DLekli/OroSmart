@@ -22,6 +22,9 @@ namespace OroSmart.Models
         public DateTime last_update_Timestamp { get; set; }
 
         public CustomersWorkLocation? WorkLocation { get; set; }
+
+        public CustomersContacts? CustomersContacts { get; set; }
+
     }
 
 }

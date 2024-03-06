@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OroSmart.Data;
 
@@ -11,9 +12,11 @@ using OroSmart.Data;
 namespace OroSmart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240228101826_CreateCustomersContacts")]
+    partial class CreateCustomersContacts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,27 +235,6 @@ namespace OroSmart.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("OroSmart.Models.ContactType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ContactTypes");
-                });
-
             modelBuilder.Entity("OroSmart.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -307,12 +289,10 @@ namespace OroSmart.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ContactTypeId")
-                        .IsRequired()
+                    b.Property<int>("ContactTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CustomerId")
-                        .IsRequired()
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -328,9 +308,6 @@ namespace OroSmart.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContactTypeId")
-                        .IsUnique();
 
                     b.HasIndex("CustomerId")
                         .IsUnique();
@@ -486,19 +463,11 @@ namespace OroSmart.Migrations
 
             modelBuilder.Entity("OroSmart.Models.CustomersContacts", b =>
                 {
-                    b.HasOne("OroSmart.Models.ContactType", "ContactType")
-                        .WithOne("CustomersContacts")
-                        .HasForeignKey("OroSmart.Models.CustomersContacts", "ContactTypeId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
                     b.HasOne("OroSmart.Models.Customer", "Customer")
                         .WithOne("CustomersContacts")
                         .HasForeignKey("OroSmart.Models.CustomersContacts", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ContactType");
 
                     b.Navigation("Customer");
                 });
@@ -542,11 +511,6 @@ namespace OroSmart.Migrations
                     b.Navigation("LoginHistory");
 
                     b.Navigation("WorkLocations");
-                });
-
-            modelBuilder.Entity("OroSmart.Models.ContactType", b =>
-                {
-                    b.Navigation("CustomersContacts");
                 });
 
             modelBuilder.Entity("OroSmart.Models.Customer", b =>

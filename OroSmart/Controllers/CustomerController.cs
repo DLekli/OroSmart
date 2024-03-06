@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using OroSmart.Data.Pagination;
 using OroSmart.Data.Validator;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace OroSmart.Controllers
 {
@@ -86,6 +87,13 @@ namespace OroSmart.Controllers
         //Create
         public IActionResult Create()
         {
+          
+            var users = _userManager.Users.ToList();
+            ViewBag.UserList = new SelectList(users, "Id", "UserName");
+            
+            var contactTypes = _context.ContactTypes.ToList();
+            ViewBag.ContactTypes = new SelectList(contactTypes, "Id", "Name");
+
             return View();
         }
 
@@ -113,13 +121,13 @@ namespace OroSmart.Controllers
 
             else
             {
-                // If validation fails, add model errors to ModelState
+               
                 foreach (var error in validationResult.Errors)
                 {
                     ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
                 }
 
-                // Return the view with the model to show the validation errors
+               
                 var viewModel = new CustomerViewModel
                 {
                     Customer = customer
@@ -129,7 +137,10 @@ namespace OroSmart.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(int? id)
+
+
+
+       public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -143,15 +154,74 @@ namespace OroSmart.Controllers
             }
 
             var workLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(c => c.CustomerId == id);
+            var customerContacts = await _context.CustomersContacts.FirstOrDefaultAsync(c => c.CustomerId == id); 
+
 
             var viewModel = new CustomerViewModel
             {
                 Customer = customer,
-                WorkLocation = workLocation
+                WorkLocation = workLocation,
+                CustomersContacts = customerContacts,
             };
+
+            var contactTypes = _context.ContactTypes.ToList();
+
+            ViewBag.ContactTypes = contactTypes;
+
+            var users = await _userManager.Users.ToListAsync();
+
+            var userList = users.Select(u => new SelectListItem
+            {
+                Value = u.Id,
+                Text = u.UserName
+            }).ToList();
+
+            
+            ViewBag.UserList = userList;
 
             return View(viewModel);
         }
+
+
+        public async Task<IActionResult> Edit1(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            var workLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(c => c.CustomerId == id);
+            var customerContacts = await _context.CustomersContacts.FirstOrDefaultAsync(c => c.CustomerId == id);
+
+
+            var viewModel = new CustomerViewModel
+            {
+                Customer = customer,
+                WorkLocation = workLocation,
+                CustomersContacts = customerContacts,
+            };
+
+            var contactTypes = _context.ContactTypes.ToList();
+
+            ViewBag.ContactTypes = contactTypes;
+
+            var users = await _userManager.Users.ToListAsync();
+
+            ViewBag.UserList = users;
+
+            return View(workLocation);
+        }
+
+
+
+
+
 
 
         [HttpPost]
@@ -217,12 +287,29 @@ namespace OroSmart.Controllers
             }
 
             var workLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(c => c.CustomerId == id);
+            var customerContacts = await _context.CustomersContacts.FirstOrDefaultAsync(c => c.CustomerId == id);
+
+            
+            var contactType = await _context.ContactTypes.FindAsync(customerContacts.ContactTypeId);
+            ViewBag.ContactTypeName = contactType != null ? contactType.Name : string.Empty;
+
+           
+            var referencePersonName = string.Empty;
+            if (workLocation != null && workLocation.ReferencePersonId != null)
+            {
+                var referencePerson = await _userManager.FindByIdAsync(workLocation.ReferencePersonId);
+                referencePersonName = referencePerson != null ? referencePerson.UserName : string.Empty;
+            }
+
+            ViewBag.ReferencePersonName = referencePersonName;
 
             var viewModel = new CustomerViewModel
             {
                 Customer = customer,
-                WorkLocation = workLocation
+                WorkLocation = workLocation,
+                CustomersContacts = customerContacts
             };
+            
 
             return View(viewModel);
 

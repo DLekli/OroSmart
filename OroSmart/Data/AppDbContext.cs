@@ -13,6 +13,10 @@ namespace OroSmart.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomersWorkLocation> CustomersWorkLocations { get; set; }
 
+        public DbSet<CustomersContacts> CustomersContacts { get; set; }
+        public DbSet<ContactType> ContactTypes { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +47,17 @@ namespace OroSmart.Data
                 .HasOne(cwl => cwl.Customer)
                 .WithOne(c => c.WorkLocation)
                 .HasForeignKey<CustomersWorkLocation>(cwl => cwl.CustomerId);
+
+            modelBuilder.Entity<CustomersContacts>()
+                .HasOne(cc => cc.Customer)
+                .WithOne(c => c.CustomersContacts)
+                .HasForeignKey<CustomersContacts>(cc => cc.CustomerId);
+
+            modelBuilder.Entity<ContactType>()
+                .HasOne(ct => ct.CustomersContacts)
+                .WithOne(cc => cc.ContactType)
+                .HasForeignKey<CustomersContacts>(cc => cc.ContactTypeId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
     }

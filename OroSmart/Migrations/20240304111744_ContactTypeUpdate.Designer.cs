@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OroSmart.Data;
 
@@ -11,9 +12,11 @@ using OroSmart.Data;
 namespace OroSmart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240304111744_ContactTypeUpdate")]
+    partial class ContactTypeUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,12 +310,10 @@ namespace OroSmart.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ContactTypeId")
-                        .IsRequired()
+                    b.Property<int>("ContactTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CustomerId")
-                        .IsRequired()
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -489,7 +490,7 @@ namespace OroSmart.Migrations
                     b.HasOne("OroSmart.Models.ContactType", "ContactType")
                         .WithOne("CustomersContacts")
                         .HasForeignKey("OroSmart.Models.CustomersContacts", "ContactTypeId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OroSmart.Models.Customer", "Customer")

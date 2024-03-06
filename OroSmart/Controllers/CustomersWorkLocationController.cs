@@ -21,7 +21,7 @@ namespace OroSmart.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateWorkLocation(int? id, int customerId, [Bind("City,Address,PostalCode,IsHeadquarters,Notes")] CustomersWorkLocation workLocation)
+        public async Task<IActionResult> CreateWorkLocation(int? id, int customerId, [Bind("City,Address,PostalCode,IsHeadquarters,Notes,")] CustomersWorkLocation workLocation)
         {
 
             if (id == null)
@@ -44,9 +44,11 @@ namespace OroSmart.Controllers
 
 
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditWorkLocation(int customerId, [Bind("Id,CustomerId,City,Address,PostalCode,IsHeadquarters,Notes")] CustomersWorkLocation workLocation)
+        public async Task<IActionResult> EditWorkLocation(int customerId, [Bind("Id,CustomerId,City,Address,PostalCode,IsHeadquarters,Notes,ReferencePersonId")] CustomersWorkLocation workLocation)
         {
             if (customerId <= 0)
             {
@@ -55,8 +57,6 @@ namespace OroSmart.Controllers
 
             if (!ModelState.IsValid)
             {
-
-
                 try
                 {
                     var existingWorkLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(w => w.CustomerId == customerId);
@@ -73,7 +73,7 @@ namespace OroSmart.Controllers
                         existingWorkLocation.PostalCode = workLocation.PostalCode;
                         existingWorkLocation.IsHeadquarters = workLocation.IsHeadquarters;
                         existingWorkLocation.Notes = workLocation.Notes;
-                        existingWorkLocation.ReferencePersonId = workLocation.ReferencePersonId; 
+                        existingWorkLocation.ReferencePersonId = workLocation.ReferencePersonId;
 
                     }
 
@@ -85,9 +85,10 @@ namespace OroSmart.Controllers
 
                 return RedirectToAction("Index", "Customer");
             }
-           
+
             return View(workLocation);
         }
+
 
 
 

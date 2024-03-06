@@ -44,6 +44,11 @@
                             <i class="bi bi-people"></i> <span class="align-middle">@language.Getkey("customers")</span>
                         </a>
                     </li>
+                    <li class="sidebar-item @(ViewContext.RouteData.Values["Controller"].ToString() == "ContactType" && ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                        <a class="sidebar-link" asp-controller="ContactType" asp-action="Index">
+                            <i class="bi bi-people"></i> <span class="align-middle">Contact Type</span>
+                        </a>
+                    </li>
                 </ul>
 
 

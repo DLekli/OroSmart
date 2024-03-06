@@ -69,7 +69,9 @@ builder.Services.AddAuthentication(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews()
     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginVMValidator>())
-    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerValidator>());
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerValidator>())
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ContactValidator>())
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ContactTypeValidator>());
 //builder.Services.AddTransient<IValidator<Customer>, CustomerValidator>();
 
 

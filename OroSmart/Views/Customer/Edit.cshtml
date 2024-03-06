@@ -3,6 +3,10 @@
 @model CustomerViewModel;
 @inject LanguageService language;
 
+@{
+    var contactTypes = ViewBag.ContactTypes as List<ContactType>; // Assuming ContactType is the type of elements in the list
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,14 +21,17 @@
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#customerInfo">@language.Getkey("editcustomer")</a>
+                <a class="nav-link" data-toggle="tab" href="#customerInfo">@language.Getkey("editcustomer")</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#workLocation">@language.Getkey("customerwork")</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#customercontact">Customer Contact</a>
+            </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="customerInfo">
+            <div class="tab-pane fade" id="customerInfo">
                 <h2 class="text-center mt-3">@language.Getkey("editcustomer")</h2>
                 <form asp-controller="Customer" asp-action="Edit" method="post">
                     <input type="hidden" asp-for="Customer.Id" />
@@ -94,11 +101,13 @@
                         <span asp-validation-for="WorkLocation.IsHeadquarters" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group">
+
+                      <div class="form-group">
                         <label asp-for="WorkLocation.ReferencePersonId" class="control-label">@language.Getkey("reference")</label>
                         <select asp-for="WorkLocation.ReferencePersonId" class="form-control" asp-items="ViewBag.UserList"></select>
                         <span asp-validation-for="WorkLocation.ReferencePersonId" class="text-danger"></span>
-                    </div>
+                    </div>  
+                  
                     
 
 
@@ -118,10 +127,88 @@
                     <a asp-controller="Customer" asp-action="Index">@language.Getkey("back")</a>
                 </div>
             </div>
+          
+            <div class="tab-pane fade" id="customercontact">
+
+                <h2 class="text-center mt-3">Edit Customer Contact</h2> 
+                <form asp-controller="CustomerContacts" asp-action="EditCustomerContact" method="post">
+
+
+                    <div class="form-group">
+                        <label asp-for="CustomersContacts.ContactTypeId" class="control-label">Contact Type</label>
+                        <select asp-for="CustomersContacts.ContactTypeId" class="form-control">
+                            <option value="">Select Contact Type</option>
+                            @foreach (var contactType in contactTypes)
+                            {
+                                if (contactType.Id != null && contactType.Name != null)
+                                {
+                                    <option value="@contactType.Id">@contactType.Name</option>
+
+                                }
+                                else
+                                {
+                                   
+                                    <option value="">Invalid Contact Type</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="CustomersContacts.ContactTypeId" class="text-danger"></span> 
+                    </div> 
+
+                    <div class="form-group">
+                        <label asp-for="CustomersContacts.FirstName" class="control-label">@language.Getkey("firstname")</label>
+                        <input asp-for="CustomersContacts.FirstName" class="form-control" />
+                        <span asp-validation-for="CustomersContacts.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CustomersContacts.LastName" class="control-label">@language.Getkey("lastname")</label>
+                        <input asp-for="CustomersContacts.LastName" class="form-control" />
+                        <span asp-validation-for="CustomersContacts.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CustomersContacts.Contact" class="control-label">@language.Getkey("contact")</label>
+                        <input asp-for="CustomersContacts.Contact" class="form-control" />
+                        <span asp-validation-for="CustomersContacts.Contact" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CustomersContacts.Note" class="control-label">@language.Getkey("note")</label>
+                        <textarea asp-for="CustomersContacts.Note" class="form-control"></textarea>
+                        <span asp-validation-for="CustomersContacts.Note" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">@language.Getkey("savechanges")</button>
+                    </div>
+                </form>
+            </div> 
+           
+
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            // Use the ViewBag value to activate the tab
+            var activeTab = "@ViewBag.ActiveTab";
+            if (activeTab) {
+                console.log("asdfdasfsadfdsafasdfsdaf")
+                $(`[href="@ViewBag.ActiveTab"]`).tab('show');
+            } else {
+                $(`[href="#customerInfo"]`).tab('show');
+            }
+        });
+    </script>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>
