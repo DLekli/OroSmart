@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using OroSmart.Data.Validator;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OroSmart.Controllers
 {
+    [Authorize]
     public class ContactTypeController : Controller
     {
         private readonly AppDbContext _context;

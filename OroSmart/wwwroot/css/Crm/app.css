@@ -98,7 +98,7 @@
     --bs-link-decoration: none;
     --bs-link-hover-color: #2f64b1;
     --bs-link-hover-color-rgb: 47, 100, 177;
-    --bs-link-hover-decoration: underline;
+   /* --bs-link-hover-decoration: underline;*/
     --bs-code-color: #e83e8c;
     --bs-highlight-bg: #fef1d5;
     --bs-border-width: 1px;
@@ -215,8 +215,8 @@ p {
 
 abbr[title] {
     cursor: help;
-    -webkit-text-decoration: underline dotted;
-    text-decoration: underline dotted;
+    /*-webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;*/
     -webkit-text-decoration-skip-ink: none;
     text-decoration-skip-ink: none;
 }
@@ -298,13 +298,13 @@ a {
 
     a:hover {
         --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
-        text-decoration: underline;
+        /*text-decoration: underline;*/
     }
 
     a:not([href]):not([class]),
     a:not([href]):not([class]):hover {
         color: inherit;
-        text-decoration: none;
+       /* text-decoration: none;*/
     }
 
 code,
@@ -3368,7 +3368,7 @@ textarea.form-control-lg {
     background-color: var(--bs-btn-hover-bg);
     border-color: var(--bs-btn-hover-border-color);
     color: var(--bs-btn-hover-color);
-    text-decoration: none;
+   /* text-decoration: none;*/
 }
 
 .btn-check + .btn:hover {
@@ -3709,7 +3709,7 @@ fieldset:disabled .btn {
 
     .btn-link:focus-visible,
     .btn-link:hover {
-        text-decoration: underline;
+        /*text-decoration: underline;*/
     }
 
     .btn-link:focus-visible {
@@ -14674,6 +14674,7 @@ a.sidebar-link {
     .sidebar-link:hover {
         background: #222e3c;
         border-left-color: transparent;
+        text-decoration: none;
     }
 
         .sidebar-link:hover,

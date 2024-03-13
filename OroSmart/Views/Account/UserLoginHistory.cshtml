@@ -1,27 +1,114 @@
-﻿@using OroSmart.Data.Pagination;
+﻿@using OroSmart.Data.Pagination
+@inject LanguageService language
+
 @model PaginatedList<UserLoginHistory>
 
-<div id="searchContainer" style="padding: 30px;">
-    @await Html.PartialAsync("_FilterWithPjaxViews")
-</div>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div style="width:100%;height:20px"></div>
+    <div class="card mt-4" style="border-radius: 20px;margin:45px">
+        <div class="card-body p-3">
+            <h5 class="card-title">@language.Getkey("loginhistory")</h5>
+            <div class="table-responsive">
+                <table class="table" id="styleTable">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>@language.Getkey("logintime")</th>
+                            <th>@language.Getkey("loginip")</th>
+                            <th>@language.Getkey("logouttime")</th>
+                        </tr>
 
-@section Scripts {
-    <script type="text/javascript" src="~/js/userLogin.js"></script>
-    <script>
+                        <tr>
+                            <form id="searchForm">
+                            <td>
+                                <input id="userNameSearch" name="userNameSearch" type="text" class="form-control" placeholder="Full Name" value="@ViewBag.userNameSearch">
+                            </td>
+                            <td>
+                                <input id="loginTimeSearch" name="loginTimeSearch" type="datetime-local" class="form-control" placeholder="@language.Getkey("searchbylogintime")" value="@ViewBag.loginTimeSearch">
+                            </td>
+                            <td>
+                                <input id="ipAddressSearch" name="ipAddressSearch" type="text" class="form-control" placeholder="Login Ip Address" value="@ViewBag.ipAddressSearch">
+                            </td>
+                            <td>
+                                <input id="logoutTimeSearch" name="logoutTimeSearch" type="datetime-local" class="form-control" placeholder="@language.Getkey("searchbylogouttime")" value="@ViewBag.logoutTimeSearch">
+                            </td>
+                            <td>
+                                <button id="searchButton" class="btn btn-primary" type="submit">
+                                    <i class="bi bi-search"></i> @language.Getkey("search")
+                                </button>
+                            </td>
+                            </form>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var loginHistory in Model)
+                        {
+                            <tr>
+                                <td>@loginHistory.FullName</td>
+                                <td>@(loginHistory.LoginTime.HasValue ? loginHistory.LoginTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
+                                <td>@(loginHistory.LoginIpAddress ?? "-")</td>
+                                <td>@(loginHistory.LogoutTime.HasValue ? loginHistory.LogoutTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "-")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@{
+    string prevDisabled = Model.PageIndex == 1 ? "disabled" : "";
+    string nextDisabled = Model.PageIndex == Model.TotalPages ? "disabled" : "";
+}
+
+<div class="pagination justify-content-center">
+    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-userNameSearch="@ViewBag.userNameSearch"
+       asp-route-ipAddressSearch="@ViewBag.ipAddressSearch"
+       asp-route-loginTimeSearch="@ViewBag.loginTimeSearch"
+       asp-route-logoutTimeSearch="@ViewBag.logoutTimeSearch"
+       class="btn btn-default @prevDisabled">@language.Getkey("previous")</a>
+
+    <div class="pagination-list">
+        @if (Model.PageIndex > 3)
         {
-            var urlParams = new URLSearchParams(window.location.search);
-            urlParams.set("userNameSearch", "@Html.Raw(ViewBag.userNameSearch)");
-            urlParams.set("ipAddressSearch", "@Html.Raw(ViewBag.IPAddressSearch)");
-            urlParams.set("loginTimeSearch", "@Html.Raw(ViewBag.LoginTimeSearch)");
-            urlParams.set("logoutTimeSearch", "@Html.Raw(ViewBag.LogoutTimeSearch)");
-            urlParams.set("pageNumber", "@Html.Raw(ViewBag.pageNumber)");
-            history.replaceState(null, null, "?" + urlParams.toString());
+            <a asp-action="UserLoginHistory" asp-route-pageNumber="1"
+               asp-route-userNameSearch="@ViewBag.userNameSearch"
+               asp-route-ipAddressSearch="@ViewBag.ipAddressSearch"
+               asp-route-loginTimeSearch="@ViewBag.loginTimeSearch"
+               asp-route-logoutTimeSearch="@ViewBag.logoutTimeSearch"
+               class="btn btn-secondary">1</a>
+            <span>...</span>
         }
-    </script>
-    }
 
+        @for (int i = Math.Max(1, Model.PageIndex - 2); i <= Math.Min(Model.TotalPages, Model.PageIndex + 2); i++)
+        {
+            <a asp-action="UserLoginHistory" asp-route-pageNumber="@i"
+               asp-route-userNameSearch="@ViewBag.userNameSearch"
+               asp-route-ipAddressSearch="@ViewBag.ipAddressSearch"
+               asp-route-loginTimeSearch="@ViewBag.loginTimeSearch"
+               asp-route-logoutTimeSearch="@ViewBag.logoutTimeSearch"
+               class="btn @(i == Model.PageIndex ? "btn-primary" : "btn-secondary")">@i</a>
+        }
 
+        @if (Model.PageIndex < Model.TotalPages - 2)
+        {
+            <span>...</span>
+            <a asp-action="UserLoginHistory" asp-route-pageNumber="@Model.TotalPages"
+               asp-route-userNameSearch="@ViewBag.userNameSearch"
+               asp-route-ipAddressSearch="@ViewBag.ipAddressSearch"
+               asp-route-loginTimeSearch="@ViewBag.loginTimeSearch"
+               asp-route-logoutTimeSearch="@ViewBag.logoutTimeSearch"
+               class="btn btn-secondary">@Model.TotalPages</a>
+        }
+    </div>
 
-
-
-
+    <a asp-action="UserLoginHistory" asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-userNameSearch="@ViewBag.userNameSearch"
+       asp-route-ipAddressSearch="@ViewBag.ipAddressSearch"
+       asp-route-loginTimeSearch="@ViewBag.loginTimeSearch"
+       asp-route-logoutTimeSearch="@ViewBag.logoutTimeSearch"
+       class="btn btn-default @nextDisabled">@language.Getkey("next")</a>
+</div>

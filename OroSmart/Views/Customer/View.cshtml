@@ -2,19 +2,14 @@
 @model CustomerViewModel;
 @inject LanguageService language;
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
     <title>@language.Getkey("viewcustomer")</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/Customers/customer.css" asp-append-version="true" />
 
-</head>
-<body>
+
     <div class="container">
-        <ul class="nav nav-tabs">
+    <ul id="myTab" class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#customerInfo">@language.Getkey("customerinfo")</a>
             </li>
@@ -118,26 +113,54 @@
                 </div>
 
 
-
                     <div class="form-group">
                         <label class="control-label">@language.Getkey("firstname")</label>
-                        <input class="form-control" value="@Model.CustomersContacts.FirstName" readonly />
+                        @if (Model.CustomersContacts != null)
+                        {
+                            <input class="form-control" value="@Model.CustomersContacts.FirstName" readonly />
+                        }
+                        else
+                        {
+                            <input class="form-control" value="" readonly />
+                        }
                     </div>
 
                     <div class="form-group">
                         <label class="control-label">@language.Getkey("lastname")</label>
-                        <input class="form-control" value="@Model.CustomersContacts.LastName" readonly />
+                        @if (Model.CustomersContacts != null)
+                        {
+                            <input class="form-control" value="@Model.CustomersContacts.LastName" readonly />
+                        }
+                        else
+                        {
+                            <input class="form-control" value="" readonly />
+                        }
                     </div>
 
                     <div class="form-group">
                         <label class="control-label">@language.Getkey("contact")</label>
-                        <input class="form-control" value="@Model.CustomersContacts.Contact" readonly />
+                        @if (Model.CustomersContacts != null)
+                        {
+                            <input class="form-control" value="@Model.CustomersContacts.Contact" readonly />
+                        }
+                        else
+                        {
+                            <input class="form-control" value="" readonly />
+                        }
                     </div>
 
                     <div class="form-group">
                         <label class="control-label">@language.Getkey("note")</label>
-                        <textarea class="form-control" readonly>@Model.CustomersContacts.Note</textarea>
+                        @if (Model.CustomersContacts != null)
+                        {
+                            <textarea class="form-control" readonly>@Model.CustomersContacts.Note</textarea>
+                        }
+                        else
+                        {
+                            <textarea class="form-control" readonly></textarea>
+                        }
                     </div>
+
                 </form>
                 <div class="row">
                     <div class="col">
@@ -158,7 +181,21 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
+    </script>
+}
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>  

@@ -23,7 +23,8 @@ namespace OroSmart.Models
 
         public CustomersWorkLocation? WorkLocation { get; set; }
 
-        public CustomersContacts? CustomersContacts { get; set; }
+        public List<CustomersContacts>? CustomersContacts { get; set; }
+
 
     }
 

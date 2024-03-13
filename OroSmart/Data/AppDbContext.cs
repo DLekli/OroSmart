@@ -48,15 +48,17 @@ namespace OroSmart.Data
                 .WithOne(c => c.WorkLocation)
                 .HasForeignKey<CustomersWorkLocation>(cwl => cwl.CustomerId);
 
-            modelBuilder.Entity<CustomersContacts>()
-                .HasOne(cc => cc.Customer)
-                .WithOne(c => c.CustomersContacts)
-                .HasForeignKey<CustomersContacts>(cc => cc.CustomerId);
+            
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.CustomersContacts)
+                .WithOne(cc => cc.Customer) 
+                .HasForeignKey(cc => cc.CustomerId) 
+                .IsRequired(); 
 
-            modelBuilder.Entity<ContactType>()
-                .HasOne(ct => ct.CustomersContacts)
-                .WithOne(cc => cc.ContactType)
-                .HasForeignKey<CustomersContacts>(cc => cc.ContactTypeId)
+            modelBuilder.Entity<CustomersContacts>()
+                .HasOne(cc => cc.ContactType)
+                .WithMany() 
+                .HasForeignKey(cc => cc.ContactTypeId)
                 .OnDelete(DeleteBehavior.SetNull);
         }
 

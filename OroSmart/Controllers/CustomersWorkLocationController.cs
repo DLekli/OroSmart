@@ -7,9 +7,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OroSmart.Controllers
 {
+    [Authorize]
     public class CustomersWorkLocationController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,7 +23,7 @@ namespace OroSmart.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateWorkLocation(int? id, int customerId, [Bind("City,Address,PostalCode,IsHeadquarters,Notes,")] CustomersWorkLocation workLocation)
+        public async Task<IActionResult> CreateWorkLocation(int? id, int customerId, [Bind("City,Address,PostalCode,IsHeadquarters,Notes,ReferencePersonId")] CustomersWorkLocation workLocation)
         {
 
             if (id == null)

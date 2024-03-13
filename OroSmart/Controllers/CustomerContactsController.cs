@@ -8,9 +8,12 @@ using OroSmart.Data.ViewModels;
 using OroSmart.Data.Validator;
 using FluentValidation;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Data.SqlClient;
 
 namespace OroSmart.Controllers
 {
+    [Authorize]
     public class CustomerContactsController : Controller
     {
         private readonly AppDbContext _context;
@@ -47,73 +50,76 @@ namespace OroSmart.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCustomerContact(int customerId, CustomerViewModel customerContact)
-        {
-            if (customerId <= 0 || customerContact == null || customerContact.CustomersContacts == null)
-            {
-                return NotFound();
-            }
-            
-            var validator = new ContactValidator();
-            var validationResult = await validator.ValidateAsync(customerContact.CustomersContacts);
-            if (!validationResult.IsValid)
-            {
-                var customer = await _context.Customers.FindAsync(customerId);
-                if (customer == null)
-                {
-                    return NotFound();
-                }
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+         public async Task<IActionResult> EditCustomerContact(int customerId, CustomerViewModel customerContact)
+         {
+             if (customerId <= 0 || customerContact == null || customerContact.CustomersContacts == null)
+             {
+                 return NotFound();
+             }
 
-                var workLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(c => c.CustomerId == customerId);
-                var customerContacts = await _context.CustomersContacts.FirstOrDefaultAsync(c => c.CustomerId == customerId);
-                
-                var viewModel = new CustomerViewModel
-                {
-                    Customer = customer,
-                    WorkLocation = workLocation,
-                    CustomersContacts = customerContacts,
-                };
+             var validator = new ContactValidator();
+             var validationResult = await validator.ValidateAsync(customerContact.CustomersContacts);
+             if (!validationResult.IsValid)
+             {
+                 var customer = await _context.Customers.FindAsync(customerId);
+                 if (customer == null)
+                 {
+                     return NotFound();
+                 }
 
-                var contactTypesOther = _context.ContactTypes.ToList();
+                 var workLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(c => c.CustomerId == customerId);
+                 var customerContacts = await _context.CustomersContacts.FirstOrDefaultAsync(c => c.CustomerId == customerId);
 
-                ViewBag.ContactTypes = contactTypesOther;
-                ViewBag.ActiveTab = "#customercontact";
-                return View("~/Views/Customer/Edit.cshtml", viewModel);
-            }
-            try
-            {
-                var existingCustomerContact = await _context.CustomersContacts
-                    .FirstOrDefaultAsync(w => w.CustomerId == customerId);
+                 var viewModel = new CustomerViewModel
+                 {
+                     Customer = customer,
+                     WorkLocation = workLocation,
+                     CustomersContacts = customerContacts,
+                 };
 
-                if (existingCustomerContact == null)
-                {
-                    customerContact.CustomersContacts.CustomerId = customerId;
-                    _context.CustomersContacts.Add(customerContact.CustomersContacts);
-                }
-                else
-                {
-                    existingCustomerContact.ContactTypeId = customerContact.CustomersContacts.ContactTypeId;
-                    existingCustomerContact.FirstName = customerContact.CustomersContacts.FirstName;
-                    existingCustomerContact.LastName = customerContact.CustomersContacts.LastName;
-                    existingCustomerContact.Contact = customerContact.CustomersContacts.Contact;
-                    existingCustomerContact.Note = customerContact.CustomersContacts.Note;
-                }
+                 var contactTypesOther = _context.ContactTypes.ToList();
 
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                ModelState.AddModelError("", "Concurrency error occurred while saving the changes.");
-                return View(customerContact); 
-            }
+                 ViewBag.ContactTypes = contactTypesOther;
+                 ViewBag.ActiveTab = "#customercontact";
+                 return View("~/Views/Customer/Edit.cshtml", viewModel);
+             }
+             try
+             {
+                 var existingCustomerContact = await _context.CustomersContacts
+                     .FirstOrDefaultAsync(w => w.CustomerId == customerId);
 
-            var contactTypes = _context.ContactTypes.ToList();
+                 if (existingCustomerContact == null)
+                 {
+                     customerContact.CustomersContacts.CustomerId = customerId;
+                     _context.CustomersContacts.Add(customerContact.CustomersContacts);
+                 }
+                 else
+                 {
+                     existingCustomerContact.ContactTypeId = customerContact.CustomersContacts.ContactTypeId;
+                     existingCustomerContact.FirstName = customerContact.CustomersContacts.FirstName;
+                     existingCustomerContact.LastName = customerContact.CustomersContacts.LastName;
+                     existingCustomerContact.Contact = customerContact.CustomersContacts.Contact;
+                     existingCustomerContact.Note = customerContact.CustomersContacts.Note;
+                 }
 
-            ViewBag.ContactTypes = contactTypes;
+                 await _context.SaveChangesAsync();
+             }
+             catch (DbUpdateConcurrencyException)
+             {
+                 ModelState.AddModelError("", "Concurrency error occurred while saving the changes.");
+                 return View(customerContact); 
+             }
 
-            return RedirectToAction("Index", "Customer"); 
-        }
+             var contactTypes = _context.ContactTypes.ToList();
+
+             ViewBag.ContactTypes = contactTypes;
+
+             return RedirectToAction("Index", "Customer"); 
+         }
+
+        
+
     }
 }

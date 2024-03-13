@@ -11,9 +11,11 @@ using System.Threading.Tasks;
 using OroSmart.Data.Pagination;
 using OroSmart.Data.Validator;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OroSmart.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         private readonly AppDbContext _context;
@@ -289,11 +291,15 @@ namespace OroSmart.Controllers
             var workLocation = await _context.CustomersWorkLocations.FirstOrDefaultAsync(c => c.CustomerId == id);
             var customerContacts = await _context.CustomersContacts.FirstOrDefaultAsync(c => c.CustomerId == id);
 
-            
-            var contactType = await _context.ContactTypes.FindAsync(customerContacts.ContactTypeId);
-            ViewBag.ContactTypeName = contactType != null ? contactType.Name : string.Empty;
+            var contactTypeName = string.Empty;
+            if (customerContacts != null)
+            {
+                var contactType = await _context.ContactTypes.FindAsync(customerContacts.ContactTypeId);
+                contactTypeName = contactType != null ? contactType.Name : string.Empty;
+            }
 
-           
+            ViewBag.ContactTypeName = contactTypeName;
+
             var referencePersonName = string.Empty;
             if (workLocation != null && workLocation.ReferencePersonId != null)
             {
@@ -309,11 +315,12 @@ namespace OroSmart.Controllers
                 WorkLocation = workLocation,
                 CustomersContacts = customerContacts
             };
-            
 
             return View(viewModel);
-
         }
+
+
+
 
 
         //Delete

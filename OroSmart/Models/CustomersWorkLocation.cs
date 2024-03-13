@@ -23,7 +23,7 @@ namespace OroSmart.Models
 
         [Display(Name = "Headquarters")]
         public bool IsHeadquarters { get; set; }
-        
+        [Required]
         [ForeignKey("ReferencePerson")]
         public string?  ReferencePersonId { get; set; }
         public ApplicationUser? ReferencePerson { get; set; }
